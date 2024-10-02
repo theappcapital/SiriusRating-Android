@@ -22,12 +22,15 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import com.theappcapital.siriusrating.SiriusRating
 import com.theappcapital.siriusrating.ratingconditions.EnoughAppSessionsRatingCondition
 import com.theappcapital.siriusrating.ratingconditions.EnoughDaysUsedRatingCondition
@@ -41,16 +44,21 @@ import com.theappcapital.siriusratingexample.ui.theme.SiriusRatingExampleTheme
 
 class MainActivity : ComponentActivity() {
 
-    private val homeViewModel by viewModels<HomeViewModel>()
+    private val homeViewModel by viewModels<HomeViewModel> {
+        HomeViewModel.factory
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         SiriusRating.setup(this) {
             debugEnabled(true)
+            canPromptUserToRateOnLaunch(true)
             ratingConditions(
+                // For demo purposes we do not use these rating conditions. They are however recommended for production.
                 EnoughDaysUsedRatingCondition(totalDaysRequired = 0u),
                 EnoughAppSessionsRatingCondition(totalAppSessionsRequired = 0u),
+                // The prompt will trigger when it reached 5 significant events.
                 EnoughSignificantEventsRatingCondition(significantEventsRequired = 5u),
                 NotPostponedDueToReminderRatingCondition(totalDaysBeforeReminding = 14u),
                 NotDeclinedToRateAnyVersionRatingCondition(daysAfterDecliningToPromptUserAgain = 30u, backOffFactor = 2.0, maxRecurringPromptsAfterDeclining = 2u),
@@ -58,7 +66,7 @@ class MainActivity : ComponentActivity() {
                 NotRatedAnyVersionRatingCondition(daysAfterRatingToPromptUserAgain = 240u, maxRecurringPromptsAfterRating = UInt.MAX_VALUE)
             )
             didAgreeToRateHandler {
-                Toast.makeText(this.activity, "Did press rate button.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this.activity, "You'll need to upload your app to Internal Testing on the Google Play Store to trigger the rate prompt.", Toast.LENGTH_LONG).show()
             }
             didOptInForReminderHandler {
                 Toast.makeText(this.activity, "Did press reminder button.", Toast.LENGTH_SHORT).show()
@@ -87,18 +95,11 @@ class MainActivity : ComponentActivity() {
 
 }
 
-@Preview(showBackground = true)
-@Composable
-fun SiriusRatingExamplePreview() {
-    SiriusRatingExampleTheme {
-
-    }
-}
-
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel
 ) {
+    val context = LocalContext.current
     val eventCount by viewModel.significantEventCount.observeAsState(0)
 
     Column(
@@ -111,7 +112,7 @@ fun HomeScreen(
             textAlign = TextAlign.Center
         )
         Text(
-            text = "(Prompt will trigger when it reached 5 significant events)",
+            text = "(The prompt will trigger after 5 significant events, provided no user actions have been taken.)",
             color = Color.Gray,
             textAlign = TextAlign.Center
         )
@@ -119,21 +120,29 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(onClick = {
-            viewModel.incrementEventCount()
+            viewModel.userDidSignificantEvent()
         }) {
             Text("Trigger significant event")
         }
 
         Button(onClick = {
-            viewModel.resetEventCount()
+            viewModel.resetUsageTrackers()
+            Toast.makeText(context, "Did reset usage trackers.", Toast.LENGTH_SHORT).show()
         }) {
-            Text("Reset all usage trackers")
+            Text("Reset usage trackers")
+        }
+
+        Button(onClick = {
+            viewModel.resetUserActions()
+            Toast.makeText(context, "Did reset user actions.", Toast.LENGTH_SHORT).show()
+        }) {
+            Text("Reset user actions")
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = "You will need to upload your app to Internal Testing in Google Play Store to get the rate prompt.",
+            text = "You'll need to upload your app to Internal Testing on the Google Play Store to trigger the rate prompt.",
             textAlign = TextAlign.Center
         )
 
@@ -148,19 +157,28 @@ fun HomeScreen(
 }
 
 class HomeViewModel(private val siriusRating: SiriusRating) : ViewModel() {
-    // Backing field for the significant event count
-    private val _significantEventCount = MutableLiveData(0)
-    val significantEventCount: LiveData<Int> = _significantEventCount
+    private val _significantEventCount = MutableLiveData(this.siriusRating.dataStore.significantEventCount)
+    val significantEventCount: LiveData<UInt> = _significantEventCount
 
-    // Increment the significant event count
-    fun incrementEventCount() {
-        _significantEventCount.value = (_significantEventCount.value ?: 0) + 1
+    fun userDidSignificantEvent() {
+        this.siriusRating.userDidSignificantEvent()
+        _significantEventCount.value = this.siriusRating.dataStore.significantEventCount
     }
 
-    // Reset the significant event count to zero
-    fun resetEventCount() {
-        _significantEventCount.value = 0
-
+    fun resetUsageTrackers() {
         this.siriusRating.resetUsageTrackers()
+        _significantEventCount.value = this.siriusRating.dataStore.significantEventCount
+    }
+
+    fun resetUserActions() {
+        this.siriusRating.resetUserActions()
+    }
+
+    companion object {
+        val factory: ViewModelProvider.Factory = viewModelFactory {
+            initializer {
+                HomeViewModel(siriusRating = SiriusRating.instance())
+            }
+        }
     }
 }

@@ -22,7 +22,7 @@ class SiriusRating {
 
     private val appVersionProvider: AppVersionProvider
 
-    private val dataStore: DataStore
+    val dataStore: DataStore
 
     private val requestToRatePromptPresenter: RequestToRatePromptPresenter
 
