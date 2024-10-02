@@ -1,9 +1,9 @@
 package com.theappcapital.siriusrating.datastores
 
-import com.theappcapital.siriusrating.SiriusRatingUserAction
+import com.theappcapital.siriusrating.UserAction
 import java.time.Instant
 
-interface SiriusRatingDataStore {
+interface DataStore {
 
     // The date the first app session took place.
     var firstUseDate: Instant?
@@ -20,14 +20,14 @@ interface SiriusRatingDataStore {
 
     /// The action that determines whether and when the user pressed the button to remind it later
     /// and on which app version that occurred.
-    var optedInForReminderUserActions: List<SiriusRatingUserAction>
+    var optedInForReminderUserActions: List<UserAction>
 
     /// The action that determines whether and when the user left a review
     /// and on which app version that occurred.
-    var ratedUserActions: List<SiriusRatingUserAction>
+    var ratedUserActions: List<UserAction>
 
     /// The action that determines whether and when the user declined a review request prompt
     /// and on which app version that occurred.
-    var declinedToRateUserActions: List<SiriusRatingUserAction>
+    var declinedToRateUserActions: List<UserAction>
 
 }

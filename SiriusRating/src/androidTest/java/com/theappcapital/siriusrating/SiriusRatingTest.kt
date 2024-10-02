@@ -1,7 +1,7 @@
 package com.theappcapital.siriusrating
 
 import android.app.Activity
-import com.theappcapital.siriusrating.datastores.InMemorySiriusRatingDataStore
+import com.theappcapital.siriusrating.datastores.InMemoryDataStore
 import com.theappcapital.siriusrating.prompts.presenters.RequestToRatePromptPresenter
 import com.theappcapital.siriusrating.support.versionproviders.InMemoryAppVersionProvider
 import org.junit.Assert.assertEquals
@@ -19,11 +19,11 @@ class SiriusRatingTest {
 
     private lateinit var siriusRating: SiriusRating
 
-    private lateinit var inMemorySiriusRatingDataStore: InMemorySiriusRatingDataStore
+    private lateinit var inMemorySiriusRatingDataStore: InMemoryDataStore
 
     @Before
     fun setUp() {
-        this.inMemorySiriusRatingDataStore = InMemorySiriusRatingDataStore()
+        this.inMemorySiriusRatingDataStore = InMemoryDataStore()
 
         this.siriusRating = SiriusRating(activity = mock(Activity::class.java)) {
             dataStore(dataStore = inMemorySiriusRatingDataStore)

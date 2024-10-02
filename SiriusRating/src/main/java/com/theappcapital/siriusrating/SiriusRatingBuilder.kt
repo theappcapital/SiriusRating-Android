@@ -1,8 +1,8 @@
 package com.theappcapital.siriusrating
 
 import android.app.Activity
-import com.theappcapital.siriusrating.datastores.SharedPreferencesSiriusRatingDataStore
-import com.theappcapital.siriusrating.datastores.SiriusRatingDataStore
+import com.theappcapital.siriusrating.datastores.SharedPreferencesDataStore
+import com.theappcapital.siriusrating.datastores.DataStore
 import com.theappcapital.siriusrating.prompts.presenters.GooglePlayRatePromptPresenter
 import com.theappcapital.siriusrating.prompts.presenters.RatePromptPresenter
 import com.theappcapital.siriusrating.prompts.presenters.RequestToRatePromptPresenter
@@ -22,7 +22,7 @@ class SiriusRatingBuilder(val activity: Activity) {
 
     private var appVersionProvider: AppVersionProvider? = null
 
-    private var dataStore: SiriusRatingDataStore? = null
+    private var dataStore: DataStore? = null
 
     private var requestToRatePromptPresenter: RequestToRatePromptPresenter? = null
 
@@ -61,7 +61,7 @@ class SiriusRatingBuilder(val activity: Activity) {
     var didAgreeToRateHandler: (() -> Unit)? = null
         private set
 
-    var needsResetTrackers: ((SiriusRatingDataStore, AppVersionProvider) -> Boolean) = { _, _ ->
+    var needsResetTrackers: ((DataStore, AppVersionProvider) -> Boolean) = { _, _ ->
         false
     }
 
@@ -69,7 +69,7 @@ class SiriusRatingBuilder(val activity: Activity) {
         this.appVersionProvider = appVersionProvider
     }
 
-    fun dataStore(dataStore: SiriusRatingDataStore) = apply {
+    fun dataStore(dataStore: DataStore) = apply {
         this.dataStore = dataStore
     }
 
@@ -117,8 +117,8 @@ class SiriusRatingBuilder(val activity: Activity) {
         return this.appVersionProvider ?: PackageInfoCompatAppVersionProvider(context = activity)
     }
 
-    fun getDataStore(): SiriusRatingDataStore {
-        return this.dataStore ?: SharedPreferencesSiriusRatingDataStore(context = activity)
+    fun getDataStore(): DataStore {
+        return this.dataStore ?: SharedPreferencesDataStore(context = activity)
     }
 
     fun getRequestToRatePromptPresenter(): RequestToRatePromptPresenter {

@@ -1,6 +1,6 @@
 package com.theappcapital.siriusrating.ratingconditions
 
-import com.theappcapital.siriusrating.datastores.SiriusRatingDataStore
+import com.theappcapital.siriusrating.datastores.DataStore
 import java.lang.Math.max
 import java.lang.Math.pow
 import java.time.Duration
@@ -27,7 +27,7 @@ class NotDeclinedToRateAnyVersionRatingCondition(
      * @return `true` if the user did not opt-in, or if the user did opted-in for a 'Remind me later' and the time
      * has come to remind the user. If any of these conditions fail, return `false`.
      */
-    override fun isSatisfied(dataStore: SiriusRatingDataStore): Boolean {
+    override fun isSatisfied(dataStore: DataStore): Boolean {
         val declinedToRateUserActions = dataStore.declinedToRateUserActions
         // If the the user didn't decline to rate the app (yet), return `true`.
         val mostRecentDeclinedToRateUserAction = declinedToRateUserActions.maxByOrNull { it.date } ?: return true

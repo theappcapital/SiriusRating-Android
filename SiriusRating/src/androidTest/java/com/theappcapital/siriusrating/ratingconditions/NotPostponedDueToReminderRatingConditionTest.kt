@@ -1,8 +1,8 @@
 package com.theappcapital.siriusrating.ratingconditions
 
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
-import com.theappcapital.siriusrating.SiriusRatingUserAction
-import com.theappcapital.siriusrating.datastores.InMemorySiriusRatingDataStore
+import com.theappcapital.siriusrating.UserAction
+import com.theappcapital.siriusrating.datastores.InMemoryDataStore
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -14,11 +14,11 @@ import java.time.ZoneOffset
 @RunWith(AndroidJUnit4ClassRunner::class)
 class NotPostponedDueToReminderRatingConditionTest {
 
-    private lateinit var inMemorySiriusRatingDataStore: InMemorySiriusRatingDataStore
+    private lateinit var inMemorySiriusRatingDataStore: InMemoryDataStore
 
     @Before
     fun setUp() {
-        this.inMemorySiriusRatingDataStore = InMemorySiriusRatingDataStore()
+        this.inMemorySiriusRatingDataStore = InMemoryDataStore()
     }
 
     @Test
@@ -44,7 +44,7 @@ class NotPostponedDueToReminderRatingConditionTest {
 
         // Set the action where the user did opt-in for a reminder yesterday.
         val dateTheUserOptedInForAReminder = LocalDateTime.now().minusDays(1).toInstant(ZoneOffset.UTC)
-        this.inMemorySiriusRatingDataStore.optedInForReminderUserActions = listOf(SiriusRatingUserAction(appVersion = "0.1-anyversion", date = dateTheUserOptedInForAReminder))
+        this.inMemorySiriusRatingDataStore.optedInForReminderUserActions = listOf(UserAction(appVersion = "0.1-anyversion", date = dateTheUserOptedInForAReminder))
 
         // The condition should be satisfied, because the user opted-in for a reminder yesterday and the total days
         // before reminding is 1: The date 'today' (now) and yesterday is a 1 day difference.
@@ -60,7 +60,7 @@ class NotPostponedDueToReminderRatingConditionTest {
         // Create a random date that is 'now' or ((24 * totalDaysBeforeReminding) - 1) hours in the past.
         // For example: If the `totalDaysBeforeReminding` is 2, it will create a date in the past between 0 and 47 hours.
         val dateTheUserOptedInForAReminder = LocalDateTime.now().minusHours((0 until (24 * totalDaysBeforeReminding.toInt() - 1)).random().toLong()).toInstant(ZoneOffset.UTC)
-        this.inMemorySiriusRatingDataStore.optedInForReminderUserActions = listOf(SiriusRatingUserAction(appVersion = "0.1-anyversion", date = dateTheUserOptedInForAReminder))
+        this.inMemorySiriusRatingDataStore.optedInForReminderUserActions = listOf(UserAction(appVersion = "0.1-anyversion", date = dateTheUserOptedInForAReminder))
 
         // The condition should not be satisfied, because the user opted-in for a reminder between 0 and 47 hours ago and
         // the total days before reminding is 2 (48 hours): The total days before reminding was not (yet) reached.

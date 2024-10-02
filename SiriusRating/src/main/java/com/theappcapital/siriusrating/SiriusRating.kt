@@ -8,7 +8,7 @@ import androidx.core.os.postDelayed
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
-import com.theappcapital.siriusrating.datastores.SiriusRatingDataStore
+import com.theappcapital.siriusrating.datastores.DataStore
 import com.theappcapital.siriusrating.prompts.presenters.RatePromptPresenter
 import com.theappcapital.siriusrating.prompts.presenters.RequestToRatePromptPresenter
 import com.theappcapital.siriusrating.ratingconditions.RatingCondition
@@ -22,7 +22,7 @@ class SiriusRating {
 
     private val appVersionProvider: AppVersionProvider
 
-    private val dataStore: SiriusRatingDataStore
+    private val dataStore: DataStore
 
     private val requestToRatePromptPresenter: RequestToRatePromptPresenter
 
@@ -40,7 +40,7 @@ class SiriusRating {
 
     private val didAgreeToRateHandler: (() -> Unit)?
 
-    private val needsResetTrackers: ((SiriusRatingDataStore, AppVersionProvider) -> Boolean)
+    private val needsResetTrackers: ((DataStore, AppVersionProvider) -> Boolean)
 
     val ratingConditionsHaveBeenMet: Boolean
         get() {
@@ -213,19 +213,19 @@ class SiriusRating {
                     this.showRatePrompt()
 
                     // For now just assume that the user rated.
-                    val ratedUserAction = SiriusRatingUserAction(appVersion = this.appVersionProvider.appVersion, date = Instant.now())
+                    val ratedUserAction = UserAction(appVersion = this.appVersionProvider.appVersion, date = Instant.now())
                     this.dataStore.ratedUserActions = this.dataStore.ratedUserActions + ratedUserAction
 
                     this.didAgreeToRateHandler?.invoke()
                 },
                 didOptInForReminderHandler = {
-                    val optedInForReminderUserAction = SiriusRatingUserAction(appVersion = this.appVersionProvider.appVersion, date = Instant.now())
+                    val optedInForReminderUserAction = UserAction(appVersion = this.appVersionProvider.appVersion, date = Instant.now())
                     this.dataStore.optedInForReminderUserActions = this.dataStore.optedInForReminderUserActions + optedInForReminderUserAction
 
                     this.didOptInForReminderHandler?.invoke()
                 },
                 didDeclineHandler = {
-                    val declinedToRateUserAction = SiriusRatingUserAction(appVersion = this.appVersionProvider.appVersion, date = Instant.now())
+                    val declinedToRateUserAction = UserAction(appVersion = this.appVersionProvider.appVersion, date = Instant.now())
                     this.dataStore.declinedToRateUserActions = this.dataStore.declinedToRateUserActions + declinedToRateUserAction
 
                     this.didDeclineToRateHandler?.invoke()

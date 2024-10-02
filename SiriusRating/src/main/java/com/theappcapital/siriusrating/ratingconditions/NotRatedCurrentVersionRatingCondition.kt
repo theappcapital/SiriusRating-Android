@@ -1,6 +1,6 @@
 package com.theappcapital.siriusrating.ratingconditions
 
-import com.theappcapital.siriusrating.datastores.SiriusRatingDataStore
+import com.theappcapital.siriusrating.datastores.DataStore
 import com.theappcapital.siriusrating.support.versionproviders.AppVersionProvider
 
 /**
@@ -18,7 +18,7 @@ class NotRatedCurrentVersionRatingCondition(private val appVersionProvider: AppV
      * @param dataStore The data from the store to validate the condition.
      * @return `true` when the user didn't rate the current version of the app, else `false`.
      */
-    override fun isSatisfied(dataStore: SiriusRatingDataStore): Boolean {
+    override fun isSatisfied(dataStore: DataStore): Boolean {
         val ratedUserActions = dataStore.ratedUserActions
         if (ratedUserActions.isEmpty()) {
             // The user didn't decline any rate prompt (yet), return `true`.

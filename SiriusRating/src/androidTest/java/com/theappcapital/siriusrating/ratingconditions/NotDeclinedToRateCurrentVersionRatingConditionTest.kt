@@ -1,8 +1,8 @@
 package com.theappcapital.siriusrating.ratingconditions
 
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
-import com.theappcapital.siriusrating.SiriusRatingUserAction
-import com.theappcapital.siriusrating.datastores.InMemorySiriusRatingDataStore
+import com.theappcapital.siriusrating.UserAction
+import com.theappcapital.siriusrating.datastores.InMemoryDataStore
 import com.theappcapital.siriusrating.support.versionproviders.InMemoryAppVersionProvider
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -14,11 +14,11 @@ import java.time.Instant
 @RunWith(AndroidJUnit4ClassRunner::class)
 class NotDeclinedToRateCurrentVersionRatingConditionTest {
 
-    private lateinit var inMemorySiriusRatingDataStore: InMemorySiriusRatingDataStore
+    private lateinit var inMemorySiriusRatingDataStore: InMemoryDataStore
 
     @Before
     fun setUp() {
-        this.inMemorySiriusRatingDataStore = InMemorySiriusRatingDataStore()
+        this.inMemorySiriusRatingDataStore = InMemoryDataStore()
     }
 
     @Test
@@ -43,7 +43,7 @@ class NotDeclinedToRateCurrentVersionRatingConditionTest {
         val notDeclinedToRateCurrentVersionRatingCondition = NotDeclinedToRateCurrentVersionRatingCondition(appVersionProvider = appVersionProvider)
 
         // The user declined to rate a version other than the current version of the app.
-        this.inMemorySiriusRatingDataStore.declinedToRateUserActions = listOf(SiriusRatingUserAction(appVersion = "0.2-otherversionthancurrentversion", date = Instant.now()))
+        this.inMemorySiriusRatingDataStore.declinedToRateUserActions = listOf(UserAction(appVersion = "0.2-otherversionthancurrentversion", date = Instant.now()))
 
         // The condition should be satisfied because the user did not (yet) decline to rate the current version, but only another version of the app.
         assertTrue(notDeclinedToRateCurrentVersionRatingCondition.isSatisfied(dataStore = inMemorySiriusRatingDataStore))
@@ -55,7 +55,7 @@ class NotDeclinedToRateCurrentVersionRatingConditionTest {
         val notDeclinedToRateCurrentVersionRatingCondition = NotDeclinedToRateCurrentVersionRatingCondition(appVersionProvider = appVersionProvider)
 
         // The user declined to rate the current version of the app.
-        this.inMemorySiriusRatingDataStore.declinedToRateUserActions = listOf(SiriusRatingUserAction(appVersion = appVersionProvider.appVersion, date = Instant.now()))
+        this.inMemorySiriusRatingDataStore.declinedToRateUserActions = listOf(UserAction(appVersion = appVersionProvider.appVersion, date = Instant.now()))
 
         // The condition should not be satisfied, because the user declined to rate the current version of the app.
         assertFalse(notDeclinedToRateCurrentVersionRatingCondition.isSatisfied(dataStore = inMemorySiriusRatingDataStore))

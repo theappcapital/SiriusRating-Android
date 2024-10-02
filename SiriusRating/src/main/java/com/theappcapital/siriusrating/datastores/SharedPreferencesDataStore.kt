@@ -2,7 +2,7 @@ package com.theappcapital.siriusrating.datastores
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.theappcapital.siriusrating.SiriusRatingUserAction
+import com.theappcapital.siriusrating.UserAction
 import com.theappcapital.siriusrating.support.InstantIso8601Serializer
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -10,7 +10,7 @@ import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.contextual
 import java.time.Instant
 
-class SharedPreferencesSiriusRatingDataStore(private val sharedPreferences: SharedPreferences) : SiriusRatingDataStore {
+class SharedPreferencesDataStore(private val sharedPreferences: SharedPreferences) : DataStore {
 
     private val json = Json {
         serializersModule = SerializersModule {
@@ -55,7 +55,7 @@ class SharedPreferencesSiriusRatingDataStore(private val sharedPreferences: Shar
             this.sharedPreferences.edit().putString("previous_or_current_app_version", value).apply()
         }
 
-    override var optedInForReminderUserActions: List<SiriusRatingUserAction>
+    override var optedInForReminderUserActions: List<UserAction>
         get() {
             return this.sharedPreferences.getString("opted_in_for_reminder_user_actions", null)?.let {
                 this.json.decodeFromString(it)
@@ -66,7 +66,7 @@ class SharedPreferencesSiriusRatingDataStore(private val sharedPreferences: Shar
             this.sharedPreferences.edit().putString("opted_in_for_reminder_user_actions", jsonString).apply()
         }
 
-    override var ratedUserActions: List<SiriusRatingUserAction>
+    override var ratedUserActions: List<UserAction>
         get() {
             return this.sharedPreferences.getString("rated_user_actions", null)?.let {
                 this.json.decodeFromString(it)
@@ -77,7 +77,7 @@ class SharedPreferencesSiriusRatingDataStore(private val sharedPreferences: Shar
             this.sharedPreferences.edit().putString("rated_user_actions", jsonString).apply()
         }
 
-    override var declinedToRateUserActions: List<SiriusRatingUserAction>
+    override var declinedToRateUserActions: List<UserAction>
         get() {
             return this.sharedPreferences.getString("declined_to_rate_user_actions", null)?.let {
                 this.json.decodeFromString(it)

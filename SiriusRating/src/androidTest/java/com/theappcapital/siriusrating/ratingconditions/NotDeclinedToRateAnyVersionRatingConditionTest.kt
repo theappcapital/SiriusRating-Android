@@ -1,8 +1,8 @@
 package com.theappcapital.siriusrating.ratingconditions
 
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
-import com.theappcapital.siriusrating.SiriusRatingUserAction
-import com.theappcapital.siriusrating.datastores.InMemorySiriusRatingDataStore
+import com.theappcapital.siriusrating.UserAction
+import com.theappcapital.siriusrating.datastores.InMemoryDataStore
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -15,11 +15,11 @@ import java.time.ZoneOffset
 @RunWith(AndroidJUnit4ClassRunner::class)
 class NotDeclinedToRateAnyVersionRatingConditionTest {
 
-    private lateinit var inMemorySiriusRatingDataStore: InMemorySiriusRatingDataStore
+    private lateinit var inMemorySiriusRatingDataStore: InMemoryDataStore
 
     @Before
     fun setUp() {
-        this.inMemorySiriusRatingDataStore = InMemorySiriusRatingDataStore()
+        this.inMemorySiriusRatingDataStore = InMemoryDataStore()
     }
 
     @Test
@@ -44,7 +44,7 @@ class NotDeclinedToRateAnyVersionRatingConditionTest {
         val notDeclinedToRateAnyVersionRatingCondition = NotDeclinedToRateAnyVersionRatingCondition(daysAfterDecliningToPromptUserAgain = 180u, maxRecurringPromptsAfterDeclining = 1u)
 
         // Set the user actions where the user declined to rate the app 180 days ago (180 days is required to show the prompt again).
-        this.inMemorySiriusRatingDataStore.declinedToRateUserActions = listOf(SiriusRatingUserAction(appVersion = "0.1-version", date = LocalDateTime.now().minusDays(180).toInstant(ZoneOffset.UTC)))
+        this.inMemorySiriusRatingDataStore.declinedToRateUserActions = listOf(UserAction(appVersion = "0.1-version", date = LocalDateTime.now().minusDays(180).toInstant(ZoneOffset.UTC)))
 
         // The condition should be satisfied, because the total amount of days (180) have passed since the user declined last.
         assertTrue(notDeclinedToRateAnyVersionRatingCondition.isSatisfied(dataStore = inMemorySiriusRatingDataStore))
@@ -57,9 +57,9 @@ class NotDeclinedToRateAnyVersionRatingConditionTest {
 
         // Set the user actions where the user already declined 3 times.
         this.inMemorySiriusRatingDataStore.declinedToRateUserActions = listOf(
-            SiriusRatingUserAction(appVersion = "0.1-version", date = Instant.now()),
-            SiriusRatingUserAction(appVersion = "0.2-version", date = Instant.now()),
-            SiriusRatingUserAction(appVersion = "0.3-version", date = Instant.now())
+            UserAction(appVersion = "0.1-version", date = Instant.now()),
+            UserAction(appVersion = "0.2-version", date = Instant.now()),
+            UserAction(appVersion = "0.3-version", date = Instant.now())
         )
 
         // The condition should not be satisfied, because we reached the max amount of recurring prompts (3 is greater than 2).
@@ -72,7 +72,7 @@ class NotDeclinedToRateAnyVersionRatingConditionTest {
         val notDeclinedToRateAnyVersionRatingCondition = NotDeclinedToRateAnyVersionRatingCondition(daysAfterDecliningToPromptUserAgain = 180u, maxRecurringPromptsAfterDeclining = 1u)
 
         // The user declined to rate the app 90 days ago (180 days is required to show the prompt again).
-        this.inMemorySiriusRatingDataStore.declinedToRateUserActions = listOf(SiriusRatingUserAction(appVersion = "0.1-version", date = LocalDateTime.now().minusDays(90).toInstant(ZoneOffset.UTC)))
+        this.inMemorySiriusRatingDataStore.declinedToRateUserActions = listOf(UserAction(appVersion = "0.1-version", date = LocalDateTime.now().minusDays(90).toInstant(ZoneOffset.UTC)))
 
         // The condition is should not be satisfied; the user did decline to rate, but only a total of 90 days have
         // passed instead of the 180 days required to show the prompt.

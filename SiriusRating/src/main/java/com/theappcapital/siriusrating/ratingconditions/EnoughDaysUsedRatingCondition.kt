@@ -1,6 +1,6 @@
 package com.theappcapital.siriusrating.ratingconditions
 
-import com.theappcapital.siriusrating.datastores.SiriusRatingDataStore
+import com.theappcapital.siriusrating.datastores.DataStore
 import java.time.Duration
 import java.time.LocalDate
 import java.time.ZoneOffset
@@ -14,7 +14,7 @@ class EnoughDaysUsedRatingCondition(private val totalDaysRequired: UInt) : Ratin
      * @return `true` if the app was used long enough. `false` if the
      * `firstUseDate` is nil or when the app was not used long enough.
      */
-    override fun isSatisfied(dataStore: SiriusRatingDataStore): Boolean {
+    override fun isSatisfied(dataStore: DataStore): Boolean {
         // The `firstUseDate` must exist, if not return `false`.
         val firstUseDate = dataStore.firstUseDate ?: return false
 

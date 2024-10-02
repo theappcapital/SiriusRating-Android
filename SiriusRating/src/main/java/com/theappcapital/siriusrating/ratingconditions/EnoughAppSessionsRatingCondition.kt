@@ -1,6 +1,6 @@
 package com.theappcapital.siriusrating.ratingconditions
 
-import com.theappcapital.siriusrating.datastores.SiriusRatingDataStore
+import com.theappcapital.siriusrating.datastores.DataStore
 
 /**
  * The rating conditions that checks if the app has been used long enough.
@@ -17,7 +17,7 @@ class EnoughAppSessionsRatingCondition(private val totalAppSessionsRequired: UIn
      * @param dataStore
      * @return `true` if the app as been used enough times, else `false`.
      */
-    override fun isSatisfied(dataStore: SiriusRatingDataStore): Boolean {
+    override fun isSatisfied(dataStore: DataStore): Boolean {
         // The total amount of times the app has been opened.
         val appSessionsCount = dataStore.appSessionsCount
 

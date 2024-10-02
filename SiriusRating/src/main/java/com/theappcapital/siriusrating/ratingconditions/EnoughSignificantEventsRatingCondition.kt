@@ -1,6 +1,6 @@
 package com.theappcapital.siriusrating.ratingconditions
 
-import com.theappcapital.siriusrating.datastores.SiriusRatingDataStore
+import com.theappcapital.siriusrating.datastores.DataStore
 
 class EnoughSignificantEventsRatingCondition(private val significantEventsRequired: UInt) : RatingCondition {
 
@@ -10,7 +10,7 @@ class EnoughSignificantEventsRatingCondition(private val significantEventsRequir
      * @param dataStore
      * @return `true` if the user has done enough significant events, else `false`.
      */
-    override fun isSatisfied(dataStore: SiriusRatingDataStore): Boolean {
+    override fun isSatisfied(dataStore: DataStore): Boolean {
         // The total amount of significant events done by the user.
         val significantEventCount = dataStore.significantEventCount
 

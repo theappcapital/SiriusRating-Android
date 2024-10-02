@@ -1,7 +1,7 @@
 package com.theappcapital.siriusrating.ratingconditions
 
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
-import com.theappcapital.siriusrating.datastores.InMemorySiriusRatingDataStore
+import com.theappcapital.siriusrating.datastores.InMemoryDataStore
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -10,11 +10,11 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4ClassRunner::class)
 class EnoughAppSessionsRatingConditionTest {
 
-    private lateinit var inMemorySiriusRatingDataStore: InMemorySiriusRatingDataStore
+    private lateinit var inMemorySiriusRatingDataStore: InMemoryDataStore
 
     @Before
     fun setUp() {
-        this.inMemorySiriusRatingDataStore = InMemorySiriusRatingDataStore()
+        this.inMemorySiriusRatingDataStore = InMemoryDataStore()
     }
 
     @Test
