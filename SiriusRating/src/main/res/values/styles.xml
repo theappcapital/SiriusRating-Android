@@ -1,10 +1,5 @@
 <!-- res/values/styles.xml -->
 <resources>
     <!-- SiriusRating Theme -->
-    <style name="Theme.SiriusRating" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-<!--        &lt;!&ndash; Define your custom attributes and styles here &ndash;&gt;-->
-<!--        <item name="customTextColor">@color/custom_text_color</item>-->
-<!--        <item name="customButtonStyle">@style/Widget.CustomWidget.Button</item>-->
-<!--        &lt;!&ndash; Other custom attributes &ndash;&gt;-->
-    </style>
+    <style name="Theme.SiriusRating" parent="Theme.MaterialComponents.DayNight.NoActionBar" />
 </resources>
