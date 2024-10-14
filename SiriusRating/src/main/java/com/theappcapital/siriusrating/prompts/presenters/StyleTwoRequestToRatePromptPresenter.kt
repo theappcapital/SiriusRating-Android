@@ -65,20 +65,32 @@ class StyleTwoRequestToRatePromptPresenter(
 
         val resolvedColorPrimary = colorPrimary ?: run {
             val colorPrimaryTypedValue = TypedValue()
-            activity.theme.resolveAttribute(com.google.android.material.R.attr.colorPrimary, colorPrimaryTypedValue, true)
-            colorPrimaryTypedValue.data
+            // 1. Try to resolve color using Google Material first.
+            var colorExists = activity.theme.resolveAttribute(com.google.android.material.R.attr.colorPrimary, colorPrimaryTypedValue, true)
+            // 2. If the color could not be found using Google Material, try AppCompat instead.
+            if (!colorExists || colorPrimaryTypedValue.data == 0) {
+                colorExists = activity.theme.resolveAttribute(androidx.appcompat.R.attr.colorPrimary, colorPrimaryTypedValue, true)
+            }
+
+            if (colorExists && colorPrimaryTypedValue.data != 0) {
+                colorPrimaryTypedValue.data
+            } else {
+                null
+            }
         }
 
-        this.alertDialog?.setOnShowListener { dialog ->
-            (dialog as? AlertDialog)?.let { alertDialog ->
-                val buttonTypes = listOf(
-                    DialogInterface.BUTTON_POSITIVE,
-                    DialogInterface.BUTTON_NEGATIVE,
-                    DialogInterface.BUTTON_NEUTRAL
-                )
+        if (resolvedColorPrimary != null) {
+            this.alertDialog?.setOnShowListener { dialog ->
+                (dialog as? AlertDialog)?.let { alertDialog ->
+                    val buttonTypes = listOf(
+                        DialogInterface.BUTTON_POSITIVE,
+                        DialogInterface.BUTTON_NEGATIVE,
+                        DialogInterface.BUTTON_NEUTRAL
+                    )
 
-                buttonTypes.forEach { buttonType ->
-                    alertDialog.getButton(buttonType)?.setTextColor(resolvedColorPrimary)
+                    buttonTypes.forEach { buttonType ->
+                        alertDialog.getButton(buttonType)?.setTextColor(resolvedColorPrimary)
+                    }
                 }
             }
         }

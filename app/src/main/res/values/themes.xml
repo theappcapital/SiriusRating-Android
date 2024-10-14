@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.SiriusRatingExample" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.SiriusRatingExample" parent="android:Theme.Material.Light.NoActionBar">
+<!--        <item name="colorPrimary">@color/teal_200</item>-->
+<!--        <item name="colorOnPrimary">@color/white</item>-->
+    </style>
+
 </resources>

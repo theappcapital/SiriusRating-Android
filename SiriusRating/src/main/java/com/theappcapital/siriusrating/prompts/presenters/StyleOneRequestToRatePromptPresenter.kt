@@ -86,18 +86,42 @@ class StyleOneRequestToRatePromptPresenter(
 
         val resolvedColorPrimary = colorPrimary ?: run {
             val colorPrimaryTypedValue = TypedValue()
-            activity.theme.resolveAttribute(com.google.android.material.R.attr.colorPrimary, colorPrimaryTypedValue, true)
-            colorPrimaryTypedValue.data
+            // 1. Try to resolve color using Google Material first.
+            var colorExists = activity.theme.resolveAttribute(com.google.android.material.R.attr.colorPrimary, colorPrimaryTypedValue, true)
+            // 2. If the color could not be found using Google Material, try AppCompat instead.
+            if (!colorExists || colorPrimaryTypedValue.data == 0) {
+                colorExists = activity.theme.resolveAttribute(androidx.appcompat.R.attr.colorPrimary, colorPrimaryTypedValue, true)
+            }
+
+            if (colorExists && colorPrimaryTypedValue.data != 0) {
+                colorPrimaryTypedValue.data
+            } else {
+                null
+            }
         }
 
         val resolvedColorOnPrimary = colorOnPrimary ?: run {
             val colorOnPrimaryTypedValue = TypedValue()
-            activity.theme.resolveAttribute(com.google.android.material.R.attr.colorOnPrimary, colorOnPrimaryTypedValue, true)
-            colorOnPrimaryTypedValue.data
+            // 1. Try to resolve color using Google Material first.
+            var colorExists = activity.theme.resolveAttribute(com.google.android.material.R.attr.colorOnPrimary, colorOnPrimaryTypedValue, true)
+            // 2. If the color could not be found using Google Material, try AppCompat instead.
+            if (!colorExists || colorOnPrimaryTypedValue.data == 0) {
+                colorExists = activity.theme.resolveAttribute(androidx.appcompat.R.attr.colorControlNormal, colorOnPrimaryTypedValue, true)
+            }
+
+            if (colorExists && colorOnPrimaryTypedValue.data != 0) {
+                colorOnPrimaryTypedValue.data
+            } else {
+                null
+            }
         }
 
-        rateButton.backgroundTintList = ColorStateList.valueOf(resolvedColorPrimary)
-        rateButton.setTextColor(resolvedColorOnPrimary)
+        if (resolvedColorPrimary != null) {
+            rateButton.backgroundTintList = ColorStateList.valueOf(resolvedColorPrimary)
+        }
+        if (resolvedColorOnPrimary != null) {
+            rateButton.setTextColor(resolvedColorOnPrimary)
+        }
         rateButton.setOnClickListener {
             didAgreeToRateHandler?.invoke()
             dialog.dismiss()
@@ -111,7 +135,9 @@ class StyleOneRequestToRatePromptPresenter(
 
         val optInForReminderButton = dialog.findViewById<Button>(R.id.button_opt_in_for_reminder)
         optInForReminderButton.text = activity.getString(R.string.sirius_rating_button_opt_in_for_reminder_text)
-        optInForReminderButton.setTextColor(resolvedColorPrimary)
+        if (resolvedColorPrimary != null) {
+            optInForReminderButton.setTextColor(resolvedColorPrimary)
+        }
         optInForReminderButton.visibility = if (canOptInForReminder) View.VISIBLE else View.GONE
         optInForReminderButton.setOnClickListener {
             didOptInForReminderHandler?.invoke()
