@@ -1,24 +1,24 @@
 [versions]
-agp = "8.5.1"
+agp = "8.7.0"
 kotlin = "1.9.0"
 coreKtx = "1.13.1"
 lifecycleRuntimeKtx = "2.8.6"
-activityCompose = "1.8.0"
-composeBom = "2024.04.01"
+activityCompose = "1.9.2"
+composeBom = "2024.09.03"
 appcompat = "1.7.0"
 
 google-material = "1.12.0"
 google-play-review = "2.0.1"
 jetbrains-kotlinx-serialization-json = "1.6.3"
 androidx-constraintlayout = "2.1.4"
-androidx-lifecycle = "2.6.1"
-androidx-annotation = "1.6.0"
+androidx-lifecycle = "2.8.6"
+androidx-annotation = "1.8.2"
 
 junit = "4.13.2"
 mockito = "4.7.0"
-androidx-test-runner = "1.5.2"
+androidx-test-runner = "1.6.2"
 vanniktech-maven-publish = "0.29.0"
-runtimeLivedata = "1.7.2"
+runtimeLivedata = "1.7.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
