@@ -266,7 +266,11 @@ class SiriusRating {
             }
         }
 
-        fun setup(activity: Activity, block: SiriusRatingBuilder.() -> Unit) = setup(SiriusRatingBuilder(activity).apply { block() })
+        fun setup(activity: Activity, block: (SiriusRatingBuilder.() -> Unit)? = null) {
+            val builder = SiriusRatingBuilder(activity)
+            block?.let { builder.apply(it) }
+            setup(builder)
+        }
 
         fun setup(builder: SiriusRatingBuilder) {
             if (instance != null) {
