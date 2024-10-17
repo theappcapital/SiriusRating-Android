@@ -32,14 +32,14 @@ class SiriusRatingBuilder(val activity: Activity) {
         private set
 
     var ratingConditions: List<RatingCondition> = listOf(
-        EnoughDaysUsedRatingCondition(totalDaysRequired = 30u),
-        EnoughAppSessionsRatingCondition(totalAppSessionsRequired = 15u),
-        EnoughSignificantEventsRatingCondition(significantEventsRequired = 20u),
-        NotPostponedDueToReminderRatingCondition(totalDaysBeforeReminding = 7u),
+        EnoughDaysUsedRatingCondition(totalDaysRequired = 30),
+        EnoughAppSessionsRatingCondition(totalAppSessionsRequired = 15),
+        EnoughSignificantEventsRatingCondition(significantEventsRequired = 20),
+        NotPostponedDueToReminderRatingCondition(totalDaysBeforeReminding = 7),
         // NotDeclinedToRateCurrentVersionRatingCondition(),
-        NotDeclinedToRateAnyVersionRatingCondition(daysAfterDecliningToPromptUserAgain = 30u, backOffFactor = 2.0, maxRecurringPromptsAfterDeclining = 2u),
+        NotDeclinedToRateAnyVersionRatingCondition(daysAfterDecliningToPromptUserAgain = 30, backOffFactor = 2.0, maxRecurringPromptsAfterDeclining = 2),
         NotRatedCurrentVersionRatingCondition(appVersionProvider = PackageInfoCompatAppVersionProvider(context = activity)),
-        NotRatedAnyVersionRatingCondition(daysAfterRatingToPromptUserAgain = 240u, maxRecurringPromptsAfterRating = UInt.MAX_VALUE)
+        NotRatedAnyVersionRatingCondition(daysAfterRatingToPromptUserAgain = 240, maxRecurringPromptsAfterRating = Int.MAX_VALUE)
     )
         private set
 

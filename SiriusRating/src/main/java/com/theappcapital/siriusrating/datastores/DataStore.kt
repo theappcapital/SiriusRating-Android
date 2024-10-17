@@ -9,10 +9,10 @@ interface DataStore {
     var firstUseDate: Instant?
 
     /// The total amount of app sessions.
-    var appSessionsCount: UInt
+    var appSessionsCount: Int
 
     /// The total amount of significant events done.
-    var significantEventCount: UInt
+    var significantEventCount: Int
 
     /// Represents the previous or the current app version. This is used to check
     /// if we need to reset the counters.

@@ -2,7 +2,7 @@ package com.theappcapital.siriusrating.ratingconditions
 
 import com.theappcapital.siriusrating.datastores.DataStore
 
-class EnoughSignificantEventsRatingCondition(private val significantEventsRequired: UInt) : RatingCondition {
+class EnoughSignificantEventsRatingCondition(private val significantEventsRequired: Int) : RatingCondition {
 
     /**
      * Validate whether the user has done enough significant events.

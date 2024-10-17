@@ -23,7 +23,7 @@ class EnoughDaysUsedRatingConditionTest {
     @Test
     fun test_condition_is_satisfied_when_the_app_was_used_enough_days() {
         // Create the condition where we require the app to be used for at least 2 days.
-        val enoughDaysUsedRatingCondition = EnoughDaysUsedRatingCondition(totalDaysRequired = 2u)
+        val enoughDaysUsedRatingCondition = EnoughDaysUsedRatingCondition(totalDaysRequired = 2)
 
         // Set the first use date to 3 days ago.
         this.inMemorySiriusRatingDataStore.firstUseDate = LocalDateTime.now().minusDays(3).toInstant(ZoneOffset.UTC)
@@ -36,7 +36,7 @@ class EnoughDaysUsedRatingConditionTest {
     @Test
     fun test_condition_is_not_satisfied_when_first_use_date_is_null() {
         // Create the condition where we require the app to be used for at least 2 days.
-        val enoughDaysUsedRatingCondition = EnoughDaysUsedRatingCondition(totalDaysRequired = 2u)
+        val enoughDaysUsedRatingCondition = EnoughDaysUsedRatingCondition(totalDaysRequired = 2)
 
         // Set our first use date to null.
         this.inMemorySiriusRatingDataStore.firstUseDate = null
@@ -48,7 +48,7 @@ class EnoughDaysUsedRatingConditionTest {
     @Test
     fun test_condition_is_not_satisfied_when_app_was_not_used_enough_days() {
         // Create the condition where we require the app to be used for at least 2 days.
-        val enoughDaysUsedRatingCondition = EnoughDaysUsedRatingCondition(totalDaysRequired = 2u)
+        val enoughDaysUsedRatingCondition = EnoughDaysUsedRatingCondition(totalDaysRequired = 2)
 
         // Set the first use date to 1 days ago.
         this.inMemorySiriusRatingDataStore.firstUseDate = LocalDateTime.now().minusDays(1).toInstant(ZoneOffset.UTC)

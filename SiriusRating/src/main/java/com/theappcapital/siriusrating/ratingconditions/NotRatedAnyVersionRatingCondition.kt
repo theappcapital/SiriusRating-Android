@@ -7,17 +7,10 @@ import java.time.Duration
 import java.time.LocalDate
 import java.time.ZoneOffset
 
-/**
- * The rating condition that checks if the user didn't rate the current version of the app.
- * We do not want to prompt the user to rate the app again if it rated to rate the current
- * version of the app.
- *
- * @property appVersionProvider
- */
 class NotRatedAnyVersionRatingCondition(
-    private val daysAfterRatingToPromptUserAgain: UInt,
+    private val daysAfterRatingToPromptUserAgain: Int,
     private val backOffFactor: Double? = null,
-    private val maxRecurringPromptsAfterRating: UInt
+    private val maxRecurringPromptsAfterRating: Int
 ) : RatingCondition {
 
     /**
@@ -45,12 +38,12 @@ class NotRatedAnyVersionRatingCondition(
         // 1. Get the total amount of days since the user last rated until now.
         val fromDate = LocalDate.from(mostRecentRateUserAction.date.atZone(ZoneOffset.UTC)).atStartOfDay()
         val nowDate = LocalDate.now(ZoneOffset.UTC).atStartOfDay()
-        val totalDaysAfterUserRatedLast = Duration.between(fromDate, nowDate).toDays().toUInt()
+        val totalDaysAfterUserRatedLast = Duration.between(fromDate, nowDate).toDays().toInt()
 
         val totalDaysAfterRatingToPromptUserAgain = this.calculatedTotalDaysToPromptUserAgain(
             daysAfterRatingToPromptUserAgain = this.daysAfterRatingToPromptUserAgain,
             backOffFactor = this.backOffFactor,
-            timesRated = ratedUserActions.count().toUInt()
+            timesRated = ratedUserActions.count().toInt()
         )
 
         // Check if the total days after the user last rated is greater than or equal to the total days
@@ -60,10 +53,10 @@ class NotRatedAnyVersionRatingCondition(
     }
 
     fun calculatedTotalDaysToPromptUserAgain(
-        daysAfterRatingToPromptUserAgain: UInt,
+        daysAfterRatingToPromptUserAgain: Int,
         backOffFactor: Double?,
-        timesRated: UInt
-    ): UInt {
+        timesRated: Int
+    ): Int {
         // The `backOffFactor` must exist in order to make the back off calculation. If it does
         // not exist, return with the original amount of days.
         val backOffFactor = backOffFactor ?: return daysAfterRatingToPromptUserAgain
@@ -71,7 +64,7 @@ class NotRatedAnyVersionRatingCondition(
         // Formula: {days after rating to prompt user again} * ({back off factor} ^ ({times rated - 1}).
         // For example if the `daysAfterRatingToPromptUserAgain` is '7' and `backOffFactor` is '2.0', it will
         // calculate [7-days, 14-days, 28-days, …] for the accumulating amount of rates.
-        return (daysAfterRatingToPromptUserAgain.toDouble() * pow(backOffFactor, max(0, timesRated.toInt() - 1).toDouble())).toUInt()
+        return (daysAfterRatingToPromptUserAgain.toDouble() * pow(backOffFactor, max(0, timesRated.toInt() - 1).toDouble())).toInt()
     }
 
 }

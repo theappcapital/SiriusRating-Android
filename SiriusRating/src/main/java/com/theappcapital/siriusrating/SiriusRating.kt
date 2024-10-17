@@ -109,7 +109,7 @@ class SiriusRating {
         }
     }
 
-    private fun userDidLaunchApp() {
+    fun userDidLaunchApp() {
         if (this.canPromptUserToRateOnLaunch) {
             this.incrementAppSessionsCountAndRate()
         } else {
@@ -138,7 +138,7 @@ class SiriusRating {
         this.beforeIncrementingUsageCounter()
 
         // Increment the app session count.
-        this.dataStore.appSessionsCount += 1u
+        this.dataStore.appSessionsCount += 1
 
         this.debugLog("Incremented app session count to: ${this.dataStore.appSessionsCount}.")
         this.debugLog("Currently stored data: ${this.dataStore}.")
@@ -148,7 +148,7 @@ class SiriusRating {
         this.beforeIncrementingUsageCounter()
 
         // Increment the significant event count.
-        this.dataStore.significantEventCount += 1u
+        this.dataStore.significantEventCount += 1
 
         this.debugLog("Incremented significant event count to: ${this.dataStore.significantEventCount}.")
         this.debugLog("Currently stored data: ${this.dataStore}.")
@@ -166,8 +166,8 @@ class SiriusRating {
 
     fun resetUsageTrackers() {
         this.dataStore.firstUseDate = null
-        this.dataStore.appSessionsCount = 0u
-        this.dataStore.significantEventCount = 0u
+        this.dataStore.appSessionsCount = 0
+        this.dataStore.significantEventCount = 0
 
         this.debugLog("Resetted usage counters.")
     }

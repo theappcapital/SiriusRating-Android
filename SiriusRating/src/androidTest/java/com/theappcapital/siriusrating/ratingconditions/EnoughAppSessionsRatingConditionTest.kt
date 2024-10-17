@@ -20,15 +20,15 @@ class EnoughAppSessionsRatingConditionTest {
     @Test
     fun test_condition_is_satisfied_when_app_sessions_count_is_equal_or_greater_than_the_required_app_sessions() {
         // Create the condition where we require the app to be 'used' 5 times.
-        val enoughAppSessionsRatingCondition = EnoughAppSessionsRatingCondition(totalAppSessionsRequired = 5u)
+        val enoughAppSessionsRatingCondition = EnoughAppSessionsRatingCondition(totalAppSessionsRequired = 5)
 
         // Set the app sessions count to 5, equal to the required app sessions (5).
-        this.inMemorySiriusRatingDataStore.appSessionsCount = 5u
+        this.inMemorySiriusRatingDataStore.appSessionsCount = 5
         // The condition should be satisfied, because the app was 'used' 5 times.
         assertTrue(enoughAppSessionsRatingCondition.isSatisfied(dataStore = inMemorySiriusRatingDataStore))
 
         // Set the app sessions count to 6, greater than the required app sessions (5).
-        this.inMemorySiriusRatingDataStore.appSessionsCount = 6u
+        this.inMemorySiriusRatingDataStore.appSessionsCount = 6
         // The condition should be satisfied, because the app was 'used' 6 times.
         assertTrue(enoughAppSessionsRatingCondition.isSatisfied(dataStore = inMemorySiriusRatingDataStore))
     }
@@ -36,10 +36,10 @@ class EnoughAppSessionsRatingConditionTest {
     @Test
     fun test_condition_is_not_satisfied_when_app_sessions_count_is_lower_than_the_required_app_sessions() {
         // Create the condition where we require the app to be 'used' 5 times.
-        val enoughAppSessionsRatingCondition = EnoughAppSessionsRatingCondition(totalAppSessionsRequired = 5u)
+        val enoughAppSessionsRatingCondition = EnoughAppSessionsRatingCondition(totalAppSessionsRequired = 5)
 
         // Set the app sessions count to 1, lower than the required app sessions (5).
-        this.inMemorySiriusRatingDataStore.appSessionsCount = 5u
+        this.inMemorySiriusRatingDataStore.appSessionsCount = 5
         // The condition should not be satisfied, because the total amount of app sessions done by the
         // user is 1, where 5 or greater is required to be satisfied.
         assertTrue(enoughAppSessionsRatingCondition.isSatisfied(dataStore = inMemorySiriusRatingDataStore))

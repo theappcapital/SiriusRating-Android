@@ -9,7 +9,7 @@ import com.theappcapital.siriusrating.datastores.DataStore
  * into the foreground (on devices that support it) would also be considered a 'use'. Users need to 'use' the app this many times before
  * before they will be prompted to rate it.
  */
-class EnoughAppSessionsRatingCondition(private val totalAppSessionsRequired: UInt) : RatingCondition {
+class EnoughAppSessionsRatingCondition(private val totalAppSessionsRequired: Int) : RatingCondition {
 
     /**
      * Validate whether the app has been used enough times.

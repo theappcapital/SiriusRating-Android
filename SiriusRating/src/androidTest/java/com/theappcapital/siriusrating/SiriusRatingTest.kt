@@ -34,11 +34,11 @@ class SiriusRatingTest {
 
     @Test
     fun test_that_the_significant_event_count_is_incremented_by_one_when_the_user_did_a_significant_event() {
-        assertEquals(this.inMemorySiriusRatingDataStore.significantEventCount, 0u)
+        assertEquals(this.inMemorySiriusRatingDataStore.significantEventCount, 0)
 
         siriusRating.userDidSignificantEvent()
 
-        assertEquals(this.inMemorySiriusRatingDataStore.significantEventCount, 1u)
+        assertEquals(this.inMemorySiriusRatingDataStore.significantEventCount, 1)
     }
 
     @Test
@@ -61,11 +61,11 @@ class SiriusRatingTest {
 
     @Test
     fun test_that_the_app_sessions_count_is_incremented_by_one_when_the_user_launched_the_app() {
-        assertEquals(this.inMemorySiriusRatingDataStore.appSessionsCount, 0u)
+        assertEquals(this.inMemorySiriusRatingDataStore.appSessionsCount, 0)
 
         siriusRating.userDidLaunchApp()
 
-        assertEquals(this.inMemorySiriusRatingDataStore.appSessionsCount, 1u)
+        assertEquals(this.inMemorySiriusRatingDataStore.appSessionsCount, 1)
     }
 
     @Test

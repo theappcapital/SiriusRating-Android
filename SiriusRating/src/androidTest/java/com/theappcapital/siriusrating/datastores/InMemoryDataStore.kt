@@ -7,9 +7,9 @@ class InMemoryDataStore : DataStore {
 
     override var firstUseDate: Instant? = null
 
-    override var appSessionsCount: UInt = 0u
+    override var appSessionsCount: Int = 0
 
-    override var significantEventCount: UInt = 0u
+    override var significantEventCount: Int = 0
 
     override var previousOrCurrentAppVersion: String? = null
 

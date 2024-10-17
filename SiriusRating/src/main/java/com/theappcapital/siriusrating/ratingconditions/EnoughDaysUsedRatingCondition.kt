@@ -5,7 +5,7 @@ import java.time.Duration
 import java.time.LocalDate
 import java.time.ZoneOffset
 
-class EnoughDaysUsedRatingCondition(private val totalDaysRequired: UInt) : RatingCondition {
+class EnoughDaysUsedRatingCondition(private val totalDaysRequired: Int) : RatingCondition {
 
     /**
      * Validate whether the app is used long enough.

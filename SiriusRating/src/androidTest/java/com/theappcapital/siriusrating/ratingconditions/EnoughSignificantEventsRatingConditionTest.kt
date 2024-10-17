@@ -21,15 +21,15 @@ class EnoughSignificantEventsRatingConditionTest {
     @Test
     fun test_condition_is_satisfied_when_significant_event_count_is_equal_or_greater_than_the_required_amount_of_significant_events() {
         // Create the condition where we require the user to have done at least 5 significant events.
-        val enoughSignificantEventsRatingCondition = EnoughSignificantEventsRatingCondition(significantEventsRequired = 5u)
+        val enoughSignificantEventsRatingCondition = EnoughSignificantEventsRatingCondition(significantEventsRequired = 5)
 
         // Set our significant use count to 5, equal to the required significant events (5).
-        this.inMemorySiriusRatingDataStore.significantEventCount = 5u
+        this.inMemorySiriusRatingDataStore.significantEventCount = 5
         // Condition should be satisfied, because the user has done 5 significant events.
         assertTrue(enoughSignificantEventsRatingCondition.isSatisfied(dataStore = inMemorySiriusRatingDataStore))
 
         // Set our significant use count to be 6, greater than the required significant events (5).
-        this.inMemorySiriusRatingDataStore.significantEventCount = 6u
+        this.inMemorySiriusRatingDataStore.significantEventCount = 6
         // The condition should be satisfied, because the user has done 6 significant events.
         assertTrue(enoughSignificantEventsRatingCondition.isSatisfied(dataStore = inMemorySiriusRatingDataStore))
     }
@@ -37,10 +37,10 @@ class EnoughSignificantEventsRatingConditionTest {
     @Test
     fun test_condition_is_not_satisfied_when_significant_event_count_is_lower_than_the_required_amount_of_significant_events() {
         // Create the condition where we require the user to have done at least 5 significant events.
-        val enoughSignificantEventsRatingCondition = EnoughSignificantEventsRatingCondition(significantEventsRequired = 5u)
+        val enoughSignificantEventsRatingCondition = EnoughSignificantEventsRatingCondition(significantEventsRequired = 5)
 
         // Set our significant use count to 1, lower than the required significant events (5).
-        this.inMemorySiriusRatingDataStore.significantEventCount = 1u
+        this.inMemorySiriusRatingDataStore.significantEventCount = 1
         // The condition should not be satisfied, because the total amount of significant events done by the
         // user is 1, where 5 or greater is required to be satisfied.
         assertFalse(enoughSignificantEventsRatingCondition.isSatisfied(dataStore = inMemorySiriusRatingDataStore))

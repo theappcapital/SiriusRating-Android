@@ -31,17 +31,17 @@ class SharedPreferencesDataStore(private val sharedPreferences: SharedPreference
             this.sharedPreferences.edit().putString("first_use_date", epochMilliseconds).apply()
         }
 
-    override var appSessionsCount: UInt
+    override var appSessionsCount: Int
         get() {
-            return this.sharedPreferences.getInt("app_sessions_count", 0).toUInt()
+            return this.sharedPreferences.getInt("app_sessions_count", 0).toInt()
         }
         set(value) {
             this.sharedPreferences.edit().putInt("app_sessions_count", value.toInt()).apply()
         }
 
-    override var significantEventCount: UInt
+    override var significantEventCount: Int
         get() {
-            return this.sharedPreferences.getInt("significant_event_count", 0).toUInt()
+            return this.sharedPreferences.getInt("significant_event_count", 0).toInt()
         }
         set(value) {
             this.sharedPreferences.edit().putInt("significant_event_count", value.toInt()).apply()

@@ -32,6 +32,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.theappcapital.siriusrating.SiriusRating
+import com.theappcapital.siriusrating.prompts.presenters.StyleTwoRequestToRatePromptPresenter
 import com.theappcapital.siriusrating.ratingconditions.EnoughAppSessionsRatingCondition
 import com.theappcapital.siriusrating.ratingconditions.EnoughDaysUsedRatingCondition
 import com.theappcapital.siriusrating.ratingconditions.EnoughSignificantEventsRatingCondition
@@ -54,25 +55,26 @@ class MainActivity : ComponentActivity() {
         SiriusRating.setup(this) {
             debugEnabled(true)
             canPromptUserToRateOnLaunch(true)
+            requestToRatePromptPresenter(StyleTwoRequestToRatePromptPresenter(this.activity))
             ratingConditions(
-                // For demo purposes we do not use these rating conditions. They are however recommended for production.
-                EnoughDaysUsedRatingCondition(totalDaysRequired = 0u),
-                EnoughAppSessionsRatingCondition(totalAppSessionsRequired = 0u),
+                // For demo purposes we set the parameters of these conditions to 0. They are however recommended for production.
+                EnoughDaysUsedRatingCondition(totalDaysRequired = 0),
+                EnoughAppSessionsRatingCondition(totalAppSessionsRequired = 0),
                 // The prompt will trigger when it reached 5 significant events.
-                EnoughSignificantEventsRatingCondition(significantEventsRequired = 5u),
-                NotPostponedDueToReminderRatingCondition(totalDaysBeforeReminding = 14u),
-                NotDeclinedToRateAnyVersionRatingCondition(daysAfterDecliningToPromptUserAgain = 30u, backOffFactor = 2.0, maxRecurringPromptsAfterDeclining = 2u),
+                EnoughSignificantEventsRatingCondition(significantEventsRequired = 5),
+                NotPostponedDueToReminderRatingCondition(totalDaysBeforeReminding = 14),
+                NotDeclinedToRateAnyVersionRatingCondition(daysAfterDecliningToPromptUserAgain = 30, backOffFactor = 2.0, maxRecurringPromptsAfterDeclining = 2),
                 NotRatedCurrentVersionRatingCondition(appVersionProvider = PackageInfoCompatAppVersionProvider(context = activity)),
-                NotRatedAnyVersionRatingCondition(daysAfterRatingToPromptUserAgain = 240u, maxRecurringPromptsAfterRating = UInt.MAX_VALUE)
+                NotRatedAnyVersionRatingCondition(daysAfterRatingToPromptUserAgain = 240, maxRecurringPromptsAfterRating = Int.MAX_VALUE)
             )
             didAgreeToRateHandler {
-                Toast.makeText(this.activity, "You'll need to upload your app to Internal Testing on the Google Play Store to trigger the rate prompt.", Toast.LENGTH_LONG).show()
+                // ..
             }
             didOptInForReminderHandler {
-                Toast.makeText(this.activity, "Did press reminder button.", Toast.LENGTH_SHORT).show()
+                // ..
             }
             didDeclineToRateHandler {
-                Toast.makeText(this.activity, "Did press decline button.", Toast.LENGTH_SHORT).show()
+                // ..
             }
         }
 
@@ -102,63 +104,69 @@ fun HomeScreen(
     val context = LocalContext.current
     val eventCount by viewModel.significantEventCount.observeAsState(0)
 
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-        modifier = Modifier.padding(30.dp)
+    Box(
+        modifier = Modifier.fillMaxSize()
     ) {
-        Text(
-            text = "Significant events: $eventCount",
-            textAlign = TextAlign.Center
-        )
-        Text(
-            text = "(The prompt will trigger after 5 significant events, provided no user actions have been taken.)",
-            color = Color.Gray,
-            textAlign = TextAlign.Center
-        )
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .padding(30.dp)
+                .fillMaxSize()
+        ) {
+            Text(
+                text = "Significant events: $eventCount",
+                textAlign = TextAlign.Center
+            )
+            Text(
+                text = "(The prompt will trigger after 5 significant events, provided no user actions have been taken.)",
+                color = Color.Gray,
+                textAlign = TextAlign.Center
+            )
 
-        Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-        Button(onClick = {
-            viewModel.userDidSignificantEvent()
-        }) {
-            Text("Trigger significant event")
-        }
+            Button(onClick = {
+                viewModel.userDidSignificantEvent()
+            }) {
+                Text("Trigger significant event")
+            }
 
-        Button(onClick = {
-            viewModel.resetUsageTrackers()
-            Toast.makeText(context, "Did reset usage trackers.", Toast.LENGTH_SHORT).show()
-        }) {
-            Text("Reset usage trackers")
-        }
+            Button(onClick = {
+                viewModel.resetUsageTrackers()
+                Toast.makeText(context, "Did reset usage trackers.", Toast.LENGTH_SHORT).show()
+            }) {
+                Text("Reset usage trackers")
+            }
 
-        Button(onClick = {
-            viewModel.resetUserActions()
-            Toast.makeText(context, "Did reset user actions.", Toast.LENGTH_SHORT).show()
-        }) {
-            Text("Reset user actions")
-        }
+            Button(onClick = {
+                viewModel.resetUserActions()
+                Toast.makeText(context, "Did reset user actions.", Toast.LENGTH_SHORT).show()
+            }) {
+                Text("Reset user actions")
+            }
 
-        Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-        Text(
-            text = "You'll need to upload your app to Internal Testing on the Google Play Store to trigger the rate prompt.",
-            textAlign = TextAlign.Center
-        )
+            Text(
+                text = "You'll need to upload your app to Internal Testing on the Google Play Store to trigger the rate prompt.",
+                textAlign = TextAlign.Center
+            )
 
-        Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-        Button(onClick = {
-            SiriusRating.instance().showRequestToRatePrompt()
-        }) {
-            Text("Test request prompt")
+            Button(onClick = {
+                SiriusRating.instance().showRequestToRatePrompt()
+            }) {
+                Text("Test request prompt")
+            }
         }
     }
 }
 
 class HomeViewModel(private val siriusRating: SiriusRating) : ViewModel() {
     private val _significantEventCount = MutableLiveData(this.siriusRating.dataStore.significantEventCount)
-    val significantEventCount: LiveData<UInt> = _significantEventCount
+    val significantEventCount: LiveData<Int> = _significantEventCount
 
     fun userDidSignificantEvent() {
         this.siriusRating.userDidSignificantEvent()

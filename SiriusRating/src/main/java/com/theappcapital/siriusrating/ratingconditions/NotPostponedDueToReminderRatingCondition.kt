@@ -10,7 +10,7 @@ import java.time.ZoneOffset
  * 'Remind me later'. This value specifies how many days Armchair will wait before reminding them.
  * A value of 0 disables reminders and removes the 'Remind me later' button.
  */
-class NotPostponedDueToReminderRatingCondition(private val totalDaysBeforeReminding: UInt) : RatingCondition {
+class NotPostponedDueToReminderRatingCondition(private val totalDaysBeforeReminding: Int) : RatingCondition {
 
     /**
      * Validate whether the rating prompt is not postponed due to the opted-in reminder.
@@ -31,7 +31,7 @@ class NotPostponedDueToReminderRatingCondition(private val totalDaysBeforeRemind
 
         val fromDate = LocalDate.from(lastDateTheUserOptedInForReminder.atZone(ZoneOffset.UTC)).atStartOfDay()
         val nowDate = LocalDate.now(ZoneOffset.UTC).atStartOfDay()
-        val totalDaysAfterUserOptedInForReminder = Duration.between(fromDate, nowDate).toDays().toUInt()
+        val totalDaysAfterUserOptedInForReminder = Duration.between(fromDate, nowDate).toDays().toInt()
 
         return totalDaysAfterUserOptedInForReminder >= this.totalDaysBeforeReminding
     }
