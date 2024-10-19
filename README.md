@@ -27,7 +27,7 @@ A non-invasive and friendly way to remind users to review an Android app.
 
 ## Setup
 
-Configure a SiriusRating shared instance, typically in your MainActivity:
+Configure a SiriusRating shared instance, typically in your MainActivity or your app's initializer.
 
 ### Simple One-line Setup
 
@@ -127,6 +127,8 @@ satisfied (returning `true`).
 | `NotRatedCurrentVersionRatingCondition`      | Validates whether the user has already rated the current version of the app. The user won’t be prompted again if they’ve already rated this version.                                            |
 | `NotRatedAnyVersionRatingCondition`          | Validates that the user hasn’t rated any version of the app. If the user has previously rated the app, it checks whether enough time has passed since their last rating before prompting again. |
 
+## Customization
+
 ### Custom Configuration
 
 ```kotlin
@@ -145,13 +147,13 @@ SiriusRating.setup(activity) {
         NotRatedAnyVersionRatingCondition(daysAfterRatingToPromptUserAgain = 240, maxRecurringPromptsAfterRating = Int.MAX_VALUE)
     )
     didAgreeToRateHandler {
-        // ..
+        //...
     }
     didOptInForReminderHandler {
-        // ..
+        //...
     }
     didDeclineToRateHandler {
-        // ..
+        //...
     }
 }
 ```
@@ -182,8 +184,6 @@ SiriusRating.setup(this) {
     )
 }
 ```
-
-## Customization
 
 ### Change texts
 
