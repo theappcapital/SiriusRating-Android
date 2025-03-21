@@ -66,7 +66,7 @@ To integrate SiriusRating into your Android project, specify it in your `build.g
 ```kotlin
 dependencies {
     //...
-    implementation("com.theappcapital.siriusrating-android:1.0.2")
+    implementation("com.theappcapital:siriusrating-android:1.0.2")
 }
 ```
 
@@ -75,7 +75,7 @@ Or `build.gradle`:
 ```groovy
 dependencies {
     //...
-    implementation 'com.theappcapital.siriusrating-android:1.0.2'
+    implementation 'com.theappcapital:siriusrating-android:1.0.2'
 }
 ```
 
