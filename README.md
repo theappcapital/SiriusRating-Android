@@ -5,7 +5,7 @@
 </p>
 
 [![Kotlin](https://img.shields.io/badge/Kotlin-1.5%2B-blue?style=flat-square)](https://kotlinlang.org/)
-[![API](https://img.shields.io/badge/API-24%2B-green?style=flat-square)](https://developer.android.com/about/versions)
+[![API](https://img.shields.io/badge/API-26%2B-green?style=flat-square)](https://developer.android.com/about/versions)
 [![Maven Central](https://img.shields.io/maven-central/v/com.theappcapital/siriusrating-android.svg?style=flat-square)](https://central.sonatype.com/artifact/com.theappcapital/siriusrating-android)
 
 <img width="1012" alt="github-banner" src="https://github.com/user-attachments/assets/c4aa8c79-3195-43c4-95c8-822c3b5e7cbc">
