@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="grouped_background">#F2F2F7</color>
+    <color name="cell_background">#FFFFFF</color>
+    <color name="divider">#E5E5EA</color>
+    <color name="text_primary">#000000</color>
+    <color name="text_secondary">#000000</color>
+    <color name="text_header">#000000</color>
+    <color name="accent_blue">#007AFF</color>
+    <color name="accent_green">#34C759</color>
+    <color name="accent_red">#FF3B30</color>
+    <color name="white">#FFFFFF</color>
+</resources>

@@ -2,6 +2,7 @@ package com.theappcapital.siriusrating.datastores
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import com.theappcapital.siriusrating.UserAction
 import com.theappcapital.siriusrating.support.InstantIso8601Serializer
 import kotlinx.serialization.encodeToString
@@ -28,23 +29,23 @@ class SharedPreferencesDataStore(private val sharedPreferences: SharedPreference
         }
         set(value) {
             val epochMilliseconds = value?.toEpochMilli().toString()
-            this.sharedPreferences.edit().putString("first_use_date", epochMilliseconds).apply()
+            this.sharedPreferences.edit { putString("first_use_date", epochMilliseconds) }
         }
 
     override var appSessionsCount: Int
         get() {
-            return this.sharedPreferences.getInt("app_sessions_count", 0).toInt()
+            return this.sharedPreferences.getInt("app_sessions_count", 0)
         }
         set(value) {
-            this.sharedPreferences.edit().putInt("app_sessions_count", value.toInt()).apply()
+            this.sharedPreferences.edit { putInt("app_sessions_count", value) }
         }
 
     override var significantEventCount: Int
         get() {
-            return this.sharedPreferences.getInt("significant_event_count", 0).toInt()
+            return this.sharedPreferences.getInt("significant_event_count", 0)
         }
         set(value) {
-            this.sharedPreferences.edit().putInt("significant_event_count", value.toInt()).apply()
+            this.sharedPreferences.edit { putInt("significant_event_count", value) }
         }
 
     override var previousOrCurrentAppVersion: String?
@@ -52,7 +53,7 @@ class SharedPreferencesDataStore(private val sharedPreferences: SharedPreference
             return this.sharedPreferences.getString("previous_or_current_app_version", null)
         }
         set(value) {
-            this.sharedPreferences.edit().putString("previous_or_current_app_version", value).apply()
+            this.sharedPreferences.edit { putString("previous_or_current_app_version", value) }
         }
 
     override var optedInForReminderUserActions: List<UserAction>
@@ -63,7 +64,7 @@ class SharedPreferencesDataStore(private val sharedPreferences: SharedPreference
         }
         set(value) {
             val jsonString = this.json.encodeToString(value)
-            this.sharedPreferences.edit().putString("opted_in_for_reminder_user_actions", jsonString).apply()
+            this.sharedPreferences.edit { putString("opted_in_for_reminder_user_actions", jsonString) }
         }
 
     override var ratedUserActions: List<UserAction>
@@ -74,7 +75,7 @@ class SharedPreferencesDataStore(private val sharedPreferences: SharedPreference
         }
         set(value) {
             val jsonString = this.json.encodeToString(value)
-            this.sharedPreferences.edit().putString("rated_user_actions", jsonString).apply()
+            this.sharedPreferences.edit { putString("rated_user_actions", jsonString) }
         }
 
     override var declinedToRateUserActions: List<UserAction>
@@ -85,7 +86,7 @@ class SharedPreferencesDataStore(private val sharedPreferences: SharedPreference
         }
         set(value) {
             val jsonString = this.json.encodeToString(value)
-            this.sharedPreferences.edit().putString("declined_to_rate_user_actions", jsonString).apply()
+            this.sharedPreferences.edit { putString("declined_to_rate_user_actions", jsonString) }
         }
 
     override fun toString(): String {

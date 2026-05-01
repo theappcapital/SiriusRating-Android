@@ -1,8 +1,9 @@
 <p align="center">
   <img src="https://github.com/user-attachments/assets/ea137fe9-596b-4afb-95a1-cac80c68b1d6" height="128">
   <h1 align="center">SiriusRating Android</h1>
-  <p align="center">See: https://github.com/theappcapital/SiriusRating-iOS for iOS.</p>
 </p>
+
+<p align="center">See: https://github.com/theappcapital/SiriusRating-iOS for iOS.</p>
 
 [![Kotlin](https://img.shields.io/badge/Kotlin-1.5%2B-blue?style=flat-square)](https://kotlinlang.org/)
 [![API](https://img.shields.io/badge/API-24%2B-green?style=flat-square)](https://developer.android.com/about/versions)
@@ -10,41 +11,84 @@
 
 <img width="1012" alt="github-banner" src="https://github.com/user-attachments/assets/c4aa8c79-3195-43c4-95c8-822c3b5e7cbc">
 
-A non-invasive and friendly way to remind users to review an Android app.
+A non-invasive and friendly way to remind users to review and rate an Android app.
 
 ## Features
 
+- [x] Supports 32 languages
 - [x] Automatically adapts to your theme
-- [x] Jetpack Compose support
-- [x] Dark mode support
 - [x] Unit tested
+- [x] Dark mode compatibility
+- [x] Supports Jetpack Compose and XML views
 - [x] Configurable rating conditions
 - [x] Write your own rating conditions to further stimulate positive reviews.
-- [x] Modern design
-- [x] Non-invasive approach
-- [x] Recurring prompts that are configurable using back-off factors
-- [x] Option to create your own prompt style
+- [x] Modern, sleek design
+- [x] Non-invasive prompts
+- [x] Configurable recurring prompts with back-off factors
+- [x] Create custom prompt styles
+
+## Requirements
+- Android API 24+
+- Kotlin 1.5+
 
 ## Setup
-
-Configure a SiriusRating shared instance, typically in your MainActivity:
+Configure a SiriusRating shared instance, typically in a custom `Application` subclass's `onCreate()`. SiriusRating automatically uses your app's name in the prompt.
 
 ### Simple One-line Setup
-
-In the `onCreate()` function in MainActivity:
-
+Using default configuration (e.g. in your `Application`):
 ```kotlin
 SiriusRating.setup(this)
 ```
 
 For example:
 ```kotlin
-// ...
-override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    
-    // ...
-    SiriusRating.setup(this)
+class App : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        // ...
+        SiriusRating.setup(this)
+    }
+}
+```
+
+Or with custom thresholds:
+
+```kotlin
+SiriusRating.setup(this) {
+    // Prompt thresholds
+    daysUntilPrompt = 14
+    appSessionsUntilPrompt = 10
+    significantEventsUntilPrompt = 5
+
+    // Reminder behavior
+    daysBeforeReminding = 7
+
+    // Decline behavior
+    daysAfterDecliningToPromptAgain = 30
+    declineBackOffFactor = 2.0
+    maxPromptsAfterDeclining = 2
+
+    // Re-prompt after rating
+    daysAfterRatingToPromptAgain = 240
+    maxPromptsAfterRating = 3
+
+    // Custom conditions
+    additionalConditions = listOf(
+        /* ... */
+    )
+    customCondition = { dataStore ->
+        // Don't prompt on weekends.
+        val day = LocalDate.now().dayOfWeek
+        day != DayOfWeek.SATURDAY && day != DayOfWeek.SUNDAY
+    }
+
+    // Handlers
+    didAgreeToRateHandler = { /* ... */ }
+    didOptInForReminderHandler = { /* ... */ }
+    didDeclineToRateHandler = { /* ... */ }
+
+    // Misc
+    canPromptUserToRateOnLaunch = true
 }
 ```
 
@@ -57,32 +101,9 @@ By default, the user will be prompted to rate the app when the following conditi
 If the user selects 'Remind me later,' they will be prompted again after 7 days.
 If the user declines the prompt, they will be prompted again after 30 days, with a back-off factor of 2. This means that if the user declines a second time, they will be prompted again in 60 days, a third time in 120 days, and so on.
 
-## Installation
-
-### Gradle
-
-To integrate SiriusRating into your Android project, specify it in your `build.gradle.kts`:
-
-```kotlin
-dependencies {
-    //...
-    implementation("com.theappcapital.siriusrating-android:1.0.2")
-}
-```
-
-Or `build.gradle`:
-
-```groovy
-dependencies {
-    //...
-    implementation 'com.theappcapital.siriusrating-android:1.0.2'
-}
-```
-
 ## Usage
 
 ### Significant event
-
 A significant event defines an important event that occurred in your app. In a time tracking app it might be
 that a user registered a time entry. In a game, it might be completing a level.
 
@@ -93,7 +114,6 @@ SiriusRating.instance().userDidSignificantEvent()
 SiriusRating will validate the conditions after each significant event and prompt the user if all conditions are satisfied.
 
 ### Test request prompt
-
 To see how the request prompt will look like in your app simply use the following code.
 
 ```kotlin
@@ -101,64 +121,59 @@ To see how the request prompt will look like in your app simply use the followin
 SiriusRating.instance().showRequestPrompt()
 ```
 
-## Styles
+### Available Configuration Properties
 
-| StyleOneRequestPromptPresenter (light, default)                                                                            | StyleOneRequestPromptPresenter (dark, default)                                                                            |
-|----------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------|
-| ![Style One (light)](https://github.com/user-attachments/assets/88deafe9-0feb-4875-8b72-09dea9dd1a53) | ![Style Two (Dark)](https://github.com/user-attachments/assets/ed7ebdd8-d92f-4523-8f9b-4d61848e48f4) |
+| Property | Default | Description |
+|---|---|---|
+| `daysUntilPrompt` | `30` | The number of days the app must be installed before prompting |
+| `appSessionsUntilPrompt` | `15` | The number of app sessions (launches or foreground entries) before prompting |
+| `significantEventsUntilPrompt` | `20` | The number of significant events before prompting |
+| `daysBeforeReminding` | `7` | The number of days to wait before reminding a user who chose "Remind me later" |
+| `daysAfterDecliningToPromptAgain` | `30` | The number of days to wait before prompting again after the user declines |
+| `declineBackOffFactor` | `2.0` | The back-off multiplier applied for each successive decline (e.g. 30, 60, 120 days). Set to `null` to disable |
+| `maxPromptsAfterDeclining` | `2` | The maximum number of times the user can be re-prompted after declining |
+| `daysAfterRatingToPromptAgain` | `240` | The number of days to wait before prompting a user who has already rated |
+| `maxPromptsAfterRating` | `Int.MAX_VALUE` | The maximum number of times the user can be re-prompted after rating |
+| `debugEnabled` | `false` | When `true`, prints diagnostic information to the log. Automatically disabled in non-debug builds |
+| `canPromptUserToRateOnLaunch` | `false` | When `true`, checks conditions and potentially shows the prompt on app launch or foreground |
 
-| StyleTwoRequestPromptPresenter (light)                                                                                     | StyleTwoRequestPromptPresenter (dark)                                                                                     |
-|----------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------|
-| ![Style Two (light)](https://github.com/user-attachments/assets/4e589f06-3b78-4dd3-905d-465818369cf1) | ![Style Two (dark)](https://github.com/user-attachments/assets/3e1e6f2b-05bb-4149-bdf6-d0af68475262) |
+## Installation
 
+### Gradle
 
-## Rating conditions
-
-The rating conditions are used to validate if the user can be prompted to rate the app. The validation process happens after the user did a significant event (`userDidSignificantEvent()`) or if configured when the app was opened. The user will be prompted to rate the app if all rating conditions are
-satisfied (returning `true`).
-
-| Rating Condition                             | Description                                                                                                                                                                                     |
-|----------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `EnoughAppSessionsRatingCondition`           | Validates whether the app has been launched or brought into the foreground a sufficient number of times.                                                                                        |
-| `EnoughDaysUsedRatingCondition`              | Validates whether the app has been in use for a sufficient duration (in days).                                                                                                                  |
-| `EnoughSignificantEventsRatingCondition`     | Validates whether the user has completed enough significant events.                                                                                                                             |
-| `NotDeclinedToRateAnyVersionRatingCondition` | Validates that the user hasn’t declined to rate any version of the app. If declined, it checks whether enough time has passed since the initial decline before prompting again.                 |
-| `NotPostponedDueToReminderRatingCondition`   | Validates whether the user has opted to be reminded later. If so, it checks if the required number of days has passed to prompt again.                                                          |
-| `NotRatedCurrentVersionRatingCondition`      | Validates whether the user has already rated the current version of the app. The user won’t be prompted again if they’ve already rated this version.                                            |
-| `NotRatedAnyVersionRatingCondition`          | Validates that the user hasn’t rated any version of the app. If the user has previously rated the app, it checks whether enough time has passed since their last rating before prompting again. |
-
-### Custom Configuration
+To integrate SiriusRating into your Android project, specify it in your `build.gradle.kts`:
 
 ```kotlin
-SiriusRating.setup(activity) {
-    debugEnabled(true)
-    canPromptUserToRateOnLaunch(true)
-    requestToRatePromptPresenter(StyleTwoRequestToRatePromptPresenter(activity))
-    ratingConditions(
-        EnoughDaysUsedRatingCondition(totalDaysRequired = 0),
-        EnoughAppSessionsRatingCondition(totalAppSessionsRequired = 0),
-        EnoughSignificantEventsRatingCondition(significantEventsRequired = 5),
-        // Essential rating conditions below: Ensure these are included to prevent the prompt from appearing continuously.
-        NotPostponedDueToReminderRatingCondition(totalDaysBeforeReminding = 14),
-        NotDeclinedToRateAnyVersionRatingCondition(daysAfterDecliningToPromptUserAgain = 30, backOffFactor = 2.0, maxRecurringPromptsAfterDeclining = 2),
-        NotRatedCurrentVersionRatingCondition(appVersionProvider = PackageInfoCompatAppVersionProvider(context = activity)),
-        NotRatedAnyVersionRatingCondition(daysAfterRatingToPromptUserAgain = 240, maxRecurringPromptsAfterRating = Int.MAX_VALUE)
-    )
-    didAgreeToRateHandler {
-        // ..
-    }
-    didOptInForReminderHandler {
-        // ..
-    }
-    didDeclineToRateHandler {
-        // ..
-    }
+dependencies {
+    //...
+    implementation("com.theappcapital.siriusrating-android:2.0.0")
 }
 ```
 
+Or `build.gradle`:
+
+```groovy
+dependencies {
+    //...
+    implementation 'com.theappcapital.siriusrating-android:2.0.0'
+}
+```
+
+## Styles
+
+| StyleOneRequestPromptPresenter (light, default) | StyleOneRequestPromptPresenter (dark, default) |
+| --- | --- |
+| ![Style One (light)](https://github.com/user-attachments/assets/88deafe9-0feb-4875-8b72-09dea9dd1a53) | ![Style One (dark)](https://github.com/user-attachments/assets/ed7ebdd8-d92f-4523-8f9b-4d61848e48f4) |
+
+| StyleTwoRequestPromptPresenter (light) | StyleTwoRequestPromptPresenter (dark) |
+| --- | --- |
+| ![Style Two (light)](https://github.com/user-attachments/assets/4e589f06-3b78-4dd3-905d-465818369cf1) | ![Style Two (dark)](https://github.com/user-attachments/assets/3e1e6f2b-05bb-4149-bdf6-d0af68475262) |
+
+## Customization
+
 ### Custom rating conditions
 
-You can write your own rating conditions in addition to the current rating conditions to further stimulate positive reviews.
+You can write your own rating conditions in addition to the default conditions to further stimulate positive reviews.
 
 ```kotlin
 class GoodWeatherRatingCondition(
@@ -172,18 +187,34 @@ class GoodWeatherRatingCondition(
 }
 ```
 
-To make use of the new rating condition simply add it to the list.
+Add it alongside the default conditions:
 
 ```kotlin
 SiriusRating.setup(this) {
-    ratingConditions(
-        // ...,
+    additionalConditions = listOf(
         GoodWeatherRatingCondition(weatherRepository = WeatherDataRepository())
     )
 }
 ```
 
-## Customization
+For simple conditions, you can use an inline closure instead of a class:
+
+```kotlin
+SiriusRating.setup(this) {
+    customCondition = { dataStore ->
+        // Don't prompt on weekends.
+        val day = LocalDate.now().dayOfWeek
+        day != DayOfWeek.SATURDAY && day != DayOfWeek.SUNDAY
+    }
+}
+```
+
+### Change prompt style
+```kotlin
+SiriusRating.setup(this) {
+    requestPromptPresenter = StyleTwoRequestPromptPresenter()
+}
+```
 
 ### Change texts
 
@@ -234,8 +265,8 @@ Or if you're using App Compat theme:
 SiriusRating will automatically use the `app_name` in the `strings.xml`. If you don't want to use this name you can set it manually.
 
 ```kotlin
-SiriusRating.setup(activity) {
-    requestToRatePromptPresenter(StyleTwoRequestToRatePromptPresenter(activity, appName = "App Name"))
+SiriusRating.setup(this) {
+    requestPromptPresenter = StyleTwoRequestPromptPresenter(appName = "App Name")
 }
 ```
 

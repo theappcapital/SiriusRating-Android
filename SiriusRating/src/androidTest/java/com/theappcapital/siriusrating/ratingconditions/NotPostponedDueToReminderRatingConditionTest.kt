@@ -8,8 +8,8 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.time.LocalDateTime
-import java.time.ZoneOffset
+import java.time.Duration
+import java.time.Instant
 
 @RunWith(AndroidJUnit4ClassRunner::class)
 class NotPostponedDueToReminderRatingConditionTest {
@@ -43,7 +43,7 @@ class NotPostponedDueToReminderRatingConditionTest {
         val remindMeLaterRatingCondition = NotPostponedDueToReminderRatingCondition(totalDaysBeforeReminding = 1)
 
         // Set the action where the user did opt-in for a reminder yesterday.
-        val dateTheUserOptedInForAReminder = LocalDateTime.now().minusDays(1).toInstant(ZoneOffset.UTC)
+        val dateTheUserOptedInForAReminder = Instant.now().minus(Duration.ofDays(1))
         this.inMemorySiriusRatingDataStore.optedInForReminderUserActions = listOf(UserAction(appVersion = "0.1-anyversion", date = dateTheUserOptedInForAReminder))
 
         // The condition should be satisfied, because the user opted-in for a reminder yesterday and the total days
@@ -57,9 +57,10 @@ class NotPostponedDueToReminderRatingConditionTest {
         val totalDaysBeforeReminding = 2
         val remindMeLaterRatingCondition = NotPostponedDueToReminderRatingCondition(totalDaysBeforeReminding = totalDaysBeforeReminding)
 
-        // Create a random date that is 'now' or ((24 * totalDaysBeforeReminding) - 1) hours in the past.
+        // Create a random date between 0 and (24 * totalDaysBeforeReminding - 1) hours in the past.
         // For example: If the `totalDaysBeforeReminding` is 2, it will create a date in the past between 0 and 47 hours.
-        val dateTheUserOptedInForAReminder = LocalDateTime.now().minusHours((0 until (24 * totalDaysBeforeReminding - 1)).random().toLong()).toInstant(ZoneOffset.UTC)
+        val randomHoursAgo = (0 until (24 * totalDaysBeforeReminding)).random().toLong()
+        val dateTheUserOptedInForAReminder = Instant.now().minus(Duration.ofHours(randomHoursAgo))
         this.inMemorySiriusRatingDataStore.optedInForReminderUserActions = listOf(UserAction(appVersion = "0.1-anyversion", date = dateTheUserOptedInForAReminder))
 
         // The condition should not be satisfied, because the user opted-in for a reminder between 0 and 47 hours ago and

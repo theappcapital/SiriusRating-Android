@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sirius_rating.text_view_title.text">%1$s 평가하기</string>
+    <string name="sirius_rating.text_view_duration.text">(소요 시간: 10초 미만)</string>
+    <string name="sirius_rating.text_view_description.text">%1$s 사용이 맘에 드셨나요? 잠시만 시간을 내서 평가를 부탁드리겠습니다. 감사합니다!</string>
+    <string name="sirius_rating.button_rate.text">%1$s 평가하기</string>
+    <string name="sirius_rating.button_decline.text">평가하지 않겠습니다</string>
+    <string name="sirius_rating.button_opt_in_for_reminder.text">다음에 평가하겠습니다</string>
+</resources>

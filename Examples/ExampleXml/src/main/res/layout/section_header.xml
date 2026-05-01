@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/section_header_horizontal_padding"
+    android:paddingEnd="@dimen/section_header_horizontal_padding"
+    android:paddingBottom="@dimen/section_header_bottom_padding"
+    android:textAllCaps="true"
+    android:textColor="@color/text_header"
+    android:textSize="12sp" />

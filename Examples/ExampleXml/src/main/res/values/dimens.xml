@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="section_horizontal_margin">16dp</dimen>
+    <dimen name="section_vertical_spacing">24dp</dimen>
+    <dimen name="section_header_horizontal_padding">16dp</dimen>
+    <dimen name="section_header_bottom_padding">6dp</dimen>
+    <dimen name="section_corner_radius">12dp</dimen>
+    <dimen name="cell_horizontal_padding">16dp</dimen>
+    <dimen name="cell_vertical_padding">12dp</dimen>
+    <dimen name="cell_icon_size">20dp</dimen>
+    <dimen name="cell_icon_spacing">12dp</dimen>
+</resources>

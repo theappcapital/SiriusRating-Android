@@ -4,8 +4,7 @@ import com.theappcapital.siriusrating.datastores.DataStore
 import java.lang.Math.max
 import java.lang.Math.pow
 import java.time.Duration
-import java.time.LocalDate
-import java.time.ZoneOffset
+import java.time.Instant
 
 class NotRatedAnyVersionRatingCondition(
     private val daysAfterRatingToPromptUserAgain: Int,
@@ -28,28 +27,25 @@ class NotRatedAnyVersionRatingCondition(
         val mostRecentRateUserAction = ratedUserActions.maxByOrNull { it.date } ?: return true
 
         // Minus one, because we want to know how many times the user rated after it initially rated.
-        if ((ratedUserActions.count() - 1) > this.maxRecurringPromptsAfterRating.toInt()) {
+        if ((ratedUserActions.count() - 1) >= this.maxRecurringPromptsAfterRating) {
             // We reached the maximum amount of times the user can rate, we do not want
             // to show the prompt anymore at this point, return `false`.
             return false
         }
 
-        // Check if the app was used long enough after the most recent rate action:
-        // 1. Get the total amount of days since the user last rated until now.
-        val fromDate = LocalDate.from(mostRecentRateUserAction.date.atZone(ZoneOffset.UTC)).atStartOfDay()
-        val nowDate = LocalDate.now(ZoneOffset.UTC).atStartOfDay()
-        val totalDaysAfterUserRatedLast = Duration.between(fromDate, nowDate).toDays().toInt()
+        // Elapsed full 24-hour periods since the most recent rate.
+        val totalDaysAfterUserRatedLast = Duration.between(mostRecentRateUserAction.date, Instant.now()).toDays()
 
         val totalDaysAfterRatingToPromptUserAgain = this.calculatedTotalDaysToPromptUserAgain(
             daysAfterRatingToPromptUserAgain = this.daysAfterRatingToPromptUserAgain,
             backOffFactor = this.backOffFactor,
-            timesRated = ratedUserActions.count().toInt()
+            timesRated = ratedUserActions.count()
         )
 
         // Check if the total days after the user last rated is greater than or equal to the total days
         // needed to 'wait' to show the prompt again. For example: The user rated last 3 days ago and
         // the total days after rating to show the prompt again is 7 days, then the prompt should not be shown.
-        return totalDaysAfterUserRatedLast >= totalDaysAfterRatingToPromptUserAgain
+        return totalDaysAfterUserRatedLast >= totalDaysAfterRatingToPromptUserAgain.toLong()
     }
 
     fun calculatedTotalDaysToPromptUserAgain(
@@ -64,7 +60,7 @@ class NotRatedAnyVersionRatingCondition(
         // Formula: {days after rating to prompt user again} * ({back off factor} ^ ({times rated - 1}).
         // For example if the `daysAfterRatingToPromptUserAgain` is '7' and `backOffFactor` is '2.0', it will
         // calculate [7-days, 14-days, 28-days, …] for the accumulating amount of rates.
-        return (daysAfterRatingToPromptUserAgain.toDouble() * pow(backOffFactor, max(0, timesRated.toInt() - 1).toDouble())).toInt()
+        return (daysAfterRatingToPromptUserAgain.toDouble() * pow(backOffFactor, max(0, timesRated - 1).toDouble())).toInt()
     }
 
 }

@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">SiriusRatingExample</string>
+    <string name="title_conditions">Conditions</string>
+    <string name="title_misc">Misc</string>
+    <string name="title_user_actions">User actions</string>
+    <string name="label_result">Result:</string>
+    <string name="label_will_show_prompt">Will show prompt</string>
+    <string name="label_will_not_show_prompt">Will not show prompt</string>
+    <string name="label_significant_events">Significant events</string>
+    <string name="label_app_sessions">App sessions</string>
+    <string name="label_first_use_date">First use date</string>
+    <string name="label_rated">Rated</string>
+    <string name="label_declined">Declined</string>
+    <string name="label_opted_for_reminder">Opted for reminder</string>
+    <string name="description_significant_events">(Prompt will trigger when it reached 5 significant events)</string>
+    <string name="button_trigger_significant_event">Trigger significant event</string>
+    <string name="button_test_request_prompt">Test request prompt</string>
+    <string name="button_reset_all_trackers">Reset all trackers</string>
+    <string name="title_activity">SiriusRating</string>
+    <string name="placeholder_dash">-</string>
+</resources>

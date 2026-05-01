@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sirius_rating.text_view_title.text">Գնահատել %1$s-ը</string>
+    <string name="sirius_rating.text_view_duration.text">(տևողությունը՝ պակաս քան 10 վայրկյան)</string>
+    <string name="sirius_rating.text_view_description.text">Եթե Դուք հաճույքով եք օգտագործում %1$s-ը, դեմ չե՞ք լինի տրամադրել մեկ րոպե այն գնահատելու համար: Շնորհակալություն աջակցության համար:</string>
+    <string name="sirius_rating.button_rate.text">Գնահատել %1$s-ը</string>
+    <string name="sirius_rating.button_decline.text">Ոչ, շնորհակալություն</string>
+    <string name="sirius_rating.button_opt_in_for_reminder.text">Հիշեցնել ավելի ուշ</string>
+</resources>

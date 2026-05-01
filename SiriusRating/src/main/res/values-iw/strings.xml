@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sirius_rating.text_view_title.text">דרג את %1$s</string>
+    <string name="sirius_rating.text_view_duration.text">(משך: פחות מ-10 שניות)</string>
+    <string name="sirius_rating.text_view_description.text">אם נהנת להשתמש ב %1$s, האם תסכים לדרג אותה? תודה על התמיכה!</string>
+    <string name="sirius_rating.button_rate.text">דרג את %1$s</string>
+    <string name="sirius_rating.button_decline.text">לא תודה</string>
+    <string name="sirius_rating.button_opt_in_for_reminder.text">מאוחר יותר</string>
+</resources>

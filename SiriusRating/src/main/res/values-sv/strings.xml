@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sirius_rating.text_view_title.text">Betygsätt %1$s</string>
+    <string name="sirius_rating.text_view_duration.text">(varaktighet: mindre än 10 sekunder)</string>
+    <string name="sirius_rating.text_view_description.text">Om du gillar att använda %1$s, kan du tänka dig att betygsätta det åt oss? Tack för hjälpen!</string>
+    <string name="sirius_rating.button_rate.text">Betygsätt %1$s</string>
+    <string name="sirius_rating.button_decline.text">Nej tack</string>
+    <string name="sirius_rating.button_opt_in_for_reminder.text">Påminn mig senare</string>
+</resources>

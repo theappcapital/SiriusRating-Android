@@ -2,8 +2,7 @@ package com.theappcapital.siriusrating.ratingconditions
 
 import com.theappcapital.siriusrating.datastores.DataStore
 import java.time.Duration
-import java.time.LocalDate
-import java.time.ZoneOffset
+import java.time.Instant
 
 class EnoughDaysUsedRatingCondition(private val totalDaysRequired: Int) : RatingCondition {
 
@@ -18,10 +17,8 @@ class EnoughDaysUsedRatingCondition(private val totalDaysRequired: Int) : Rating
         // The `firstUseDate` must exist, if not return `false`.
         val firstUseDate = dataStore.firstUseDate ?: return false
 
-        // Check if the app has been used long enough.
-        val fromDate = LocalDate.from(firstUseDate.atZone(ZoneOffset.UTC)).atStartOfDay()
-        val nowDate = LocalDate.now(ZoneOffset.UTC).atStartOfDay()
-        val totalDaysUsed = Duration.between(fromDate, nowDate).toDays()
+        // Elapsed full 24-hour periods since first use.
+        val totalDaysUsed = Duration.between(firstUseDate, Instant.now()).toDays()
 
         return totalDaysUsed >= this.totalDaysRequired.toLong()
     }

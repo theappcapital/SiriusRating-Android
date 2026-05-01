@@ -2,12 +2,11 @@ package com.theappcapital.siriusrating.ratingconditions
 
 import com.theappcapital.siriusrating.datastores.DataStore
 import java.time.Duration
-import java.time.LocalDate
-import java.time.ZoneOffset
+import java.time.Instant
 
 /**
  * @property totalDaysBeforeReminding Once the rating alert is presented to the user, they might select
- * 'Remind me later'. This value specifies how many days Armchair will wait before reminding them.
+ * 'Remind me later'. This value specifies how many days we wait before reminding them.
  * A value of 0 disables reminders and removes the 'Remind me later' button.
  */
 class NotPostponedDueToReminderRatingCondition(private val totalDaysBeforeReminding: Int) : RatingCondition {
@@ -26,14 +25,10 @@ class NotPostponedDueToReminderRatingCondition(private val totalDaysBeforeRemind
             return true
         }
 
-        // Check if the app was used long enough after the user opted-in for the 'Remind me later'.
-        val lastDateTheUserOptedInForReminder = mostRecentRemindMeLaterUserAction.date
+        // Elapsed full 24-hour periods since the user opted-in for the 'Remind me later'.
+        val totalDaysAfterUserOptedInForReminder = Duration.between(mostRecentRemindMeLaterUserAction.date, Instant.now()).toDays()
 
-        val fromDate = LocalDate.from(lastDateTheUserOptedInForReminder.atZone(ZoneOffset.UTC)).atStartOfDay()
-        val nowDate = LocalDate.now(ZoneOffset.UTC).atStartOfDay()
-        val totalDaysAfterUserOptedInForReminder = Duration.between(fromDate, nowDate).toDays().toInt()
-
-        return totalDaysAfterUserOptedInForReminder >= this.totalDaysBeforeReminding
+        return totalDaysAfterUserOptedInForReminder >= this.totalDaysBeforeReminding.toLong()
     }
 
 }

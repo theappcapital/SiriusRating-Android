@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sirius_rating.text_view_title.text">Ohodnotit %1$s</string>
+    <string name="sirius_rating.text_view_duration.text">(doba trvání: méně než 10 sekund)</string>
+    <string name="sirius_rating.text_view_description.text">Pokud se Vám aplikace %1$s líbí, mohli byste ji prosím ohodnotit v App Store? Díky za Vaši podporu!</string>
+    <string name="sirius_rating.button_rate.text">Ohodnotit %1$s</string>
+    <string name="sirius_rating.button_decline.text">Ne, díky</string>
+    <string name="sirius_rating.button_opt_in_for_reminder.text">Možná později</string>
+</resources>

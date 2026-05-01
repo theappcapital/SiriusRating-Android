@@ -19,6 +19,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "SiriusRatingExample"
-include(":app")
+rootProject.name = "SiriusRating"
 include(":SiriusRating")
+include(":Examples:ExampleCompose")
+include(":Examples:ExampleXml")

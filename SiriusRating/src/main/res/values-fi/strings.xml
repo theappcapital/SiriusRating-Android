@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sirius_rating.text_view_title.text">Arvioi %1$s</string>
+    <string name="sirius_rating.text_view_duration.text">(kesto: alle 10 sekuntia)</string>
+    <string name="sirius_rating.text_view_description.text">Jos käytät mielelläsi %1$s, voisitko käyttää hetken ja arvostella sen? Kiitos tuestasi!</string>
+    <string name="sirius_rating.button_rate.text">Arvioi %1$s</string>
+    <string name="sirius_rating.button_decline.text">Ei kiitos</string>
+    <string name="sirius_rating.button_opt_in_for_reminder.text">Muistuta minua myöhemmin</string>
+</resources>

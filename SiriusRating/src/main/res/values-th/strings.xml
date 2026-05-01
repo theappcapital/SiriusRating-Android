@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sirius_rating.text_view_title.text">ให้อันดับ %1$s</string>
+    <string name="sirius_rating.text_view_duration.text">(ระยะเวลา: น้อยกว่า 10 วินาที)</string>
+    <string name="sirius_rating.text_view_description.text">ถ้าคุณกำลังใช้ %1$s โปรดสละเวลาสักครู่ในการให้อันดับแก่เรา ขอบคุณสำหรับการสนับสนุน!</string>
+    <string name="sirius_rating.button_rate.text">ให้อันดับ %1$s</string>
+    <string name="sirius_rating.button_decline.text">ไม่ ขอบคุณ</string>
+    <string name="sirius_rating.button_opt_in_for_reminder.text">เตือนฉันภายหลัง</string>
+</resources>

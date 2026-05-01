@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sirius_rating.text_view_title.text">Tarafkan %1$s</string>
+    <string name="sirius_rating.text_view_duration.text">(tempoh: kurang daripada 10 saat)</string>
+    <string name="sirius_rating.text_view_description.text">Jika anda suka %1$s, bolehkah luangkan sedikit masa untuk beri penarafan? Terima kasih atas sokongan anda!</string>
+    <string name="sirius_rating.button_rate.text">Tarafkan %1$s</string>
+    <string name="sirius_rating.button_decline.text">Terima kasih saja</string>
+    <string name="sirius_rating.button_opt_in_for_reminder.text">Ingatkan saya lain kali</string>
+</resources>

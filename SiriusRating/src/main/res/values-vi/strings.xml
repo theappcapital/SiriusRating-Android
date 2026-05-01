@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sirius_rating.text_view_title.text">Đánh giá %1$s</string>
+    <string name="sirius_rating.text_view_duration.text">(thời lượng: ít hơn 10 giây)</string>
+    <string name="sirius_rating.text_view_description.text">Cảm ơn bạn đã sử dụng ứng dụng %1$s trong thời gian qua, bạn có thể dành chút thời gian để đánh giá ứng dụng trong AppStore không? Chúng tôi rất trân trọng điều đó!</string>
+    <string name="sirius_rating.button_rate.text">Đánh giá %1$s</string>
+    <string name="sirius_rating.button_decline.text">Không, xin cảm ơn</string>
+    <string name="sirius_rating.button_opt_in_for_reminder.text">Hãy nhắc nhở tôi sau</string>
+</resources>

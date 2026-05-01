@@ -1,8 +1,9 @@
 package com.theappcapital.siriusrating
 
-import android.app.Activity
+import android.app.Application
+import androidx.test.platform.app.InstrumentationRegistry
 import com.theappcapital.siriusrating.datastores.InMemoryDataStore
-import com.theappcapital.siriusrating.prompts.presenters.RequestToRatePromptPresenter
+import com.theappcapital.siriusrating.prompts.presenters.RequestPromptPresenter
 import com.theappcapital.siriusrating.support.versionproviders.InMemoryAppVersionProvider
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
@@ -25,11 +26,16 @@ class SiriusRatingTest {
     fun setUp() {
         this.inMemorySiriusRatingDataStore = InMemoryDataStore()
 
-        this.siriusRating = SiriusRating(activity = mock(Activity::class.java)) {
-            dataStore(dataStore = inMemorySiriusRatingDataStore)
-            appVersionProvider(appVersionProvider = InMemoryAppVersionProvider())
-            requestToRatePromptPresenter(requestToRatePromptPresenter = mock(RequestToRatePromptPresenter::class.java))
+        // ProcessLifecycleOwner.addObserver enforces the main thread, so initialize on the main looper.
+        InstrumentationRegistry.getInstrumentation().runOnMainSync {
+            SiriusRating.setup(application = mock(Application::class.java)) {
+                dataStore = inMemorySiriusRatingDataStore
+                appVersionProvider = InMemoryAppVersionProvider()
+                requestPromptPresenter = mock(RequestPromptPresenter::class.java)
+            }
         }
+
+        this.siriusRating = SiriusRating.instance()
     }
 
     @Test

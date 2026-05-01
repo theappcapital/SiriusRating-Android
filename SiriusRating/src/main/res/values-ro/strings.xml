@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sirius_rating.text_view_title.text">Acordă notă pentru %1$s</string>
+    <string name="sirius_rating.text_view_duration.text">(durată: mai puțin de 10 secunde)</string>
+    <string name="sirius_rating.text_view_description.text">Dacă îți place %1$s, acordă-i o notă te rog, nu durează mult. Mulțumim pentru susținere!</string>
+    <string name="sirius_rating.button_rate.text">Acordă notă pentru %1$s</string>
+    <string name="sirius_rating.button_decline.text">Nu, mulțumesc</string>
+    <string name="sirius_rating.button_opt_in_for_reminder.text">Adu-mi aminte mai târziu</string>
+</resources>

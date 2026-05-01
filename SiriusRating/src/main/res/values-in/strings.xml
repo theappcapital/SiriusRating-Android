@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sirius_rating.text_view_title.text">Rating %1$s</string>
+    <string name="sirius_rating.text_view_duration.text">(durasi: kurang dari 10 detik)</string>
+    <string name="sirius_rating.text_view_description.text">Jika anda menyukai %1$s, maukah anda memberikan rating kepada aplikasi ini? Terimakasih untuk dukungan anda!</string>
+    <string name="sirius_rating.button_rate.text">Rating %1$s</string>
+    <string name="sirius_rating.button_decline.text">Tidak, terimakasih</string>
+    <string name="sirius_rating.button_opt_in_for_reminder.text">Silakan ingatkan saya lagi</string>
+</resources>

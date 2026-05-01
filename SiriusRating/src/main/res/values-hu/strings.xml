@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sirius_rating.text_view_title.text">%1$s értékelése</string>
+    <string name="sirius_rating.text_view_duration.text">(időtartam: kevesebb mint 10 másodperc)</string>
+    <string name="sirius_rating.text_view_description.text">Ha tetszik a %1$s, ne felejtsd el értékelni az App Store-ban! Köszönet a támogatásért!</string>
+    <string name="sirius_rating.button_rate.text">%1$s értékelése</string>
+    <string name="sirius_rating.button_decline.text">Most inkább nem</string>
+    <string name="sirius_rating.button_opt_in_for_reminder.text">Emlékeztess később</string>
+</resources>

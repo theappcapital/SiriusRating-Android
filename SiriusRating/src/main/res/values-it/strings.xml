@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sirius_rating.text_view_title.text">Valuta %1$s</string>
+    <string name="sirius_rating.text_view_duration.text">(durata: meno di 10 secondi)</string>
+    <string name="sirius_rating.text_view_description.text">Se ti piace %1$s, perché non dedichi qualche istante a darne una valutazione sull\'App Store? Grazie per il supporto!</string>
+    <string name="sirius_rating.button_rate.text">Valuta %1$s</string>
+    <string name="sirius_rating.button_decline.text">No, grazie</string>
+    <string name="sirius_rating.button_opt_in_for_reminder.text">Ricordamelo più tardi</string>
+</resources>

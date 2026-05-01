@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sirius_rating.text_view_title.text">%1$s uygulamasını değerlendir</string>
+    <string name="sirius_rating.text_view_duration.text">(süre: 10 saniyeden az)</string>
+    <string name="sirius_rating.text_view_description.text">Eğer %1$s uygulamasını kullanmaktan keyif alıyorsanız, onu değerlendirmek için zaman ayırabilir misiniz? Desteğiniz için teşekkür ederiz!</string>
+    <string name="sirius_rating.button_rate.text">%1$s uygulamasını değerlendir</string>
+    <string name="sirius_rating.button_decline.text">Hayır, teşekkürler</string>
+    <string name="sirius_rating.button_opt_in_for_reminder.text">Daha sonra hatırlat</string>
+</resources>

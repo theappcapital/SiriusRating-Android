@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sirius_rating.text_view_title.text">給%1$s評分</string>
+    <string name="sirius_rating.text_view_duration.text">(時長：少於10秒)</string>
+    <string name="sirius_rating.text_view_description.text">如果你喜歡使用%1$s，你介意花一點時間給它評分嗎？感謝您的支持！</string>
+    <string name="sirius_rating.button_rate.text">給%1$s評分</string>
+    <string name="sirius_rating.button_decline.text">不，謝謝</string>
+    <string name="sirius_rating.button_opt_in_for_reminder.text">稍後提醒我</string>
+</resources>

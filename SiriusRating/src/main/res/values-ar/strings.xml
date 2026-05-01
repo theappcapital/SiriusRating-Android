@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sirius_rating.text_view_title.text">%1$s قيم</string>
+    <string name="sirius_rating.text_view_duration.text">(المدة: أقل من 10 ثواني)</string>
+    <string name="sirius_rating.text_view_description.text">إذا كنت تتمتع بإستخدام %1$s . اذا هل تمانع بأخذ لحظة لتقيمة؟ شكرا لدعمك</string>
+    <string name="sirius_rating.button_rate.text">%1$s قيم</string>
+    <string name="sirius_rating.button_decline.text">لا, شكرا</string>
+    <string name="sirius_rating.button_opt_in_for_reminder.text">ذكرنى فيما بعد</string>
+</resources>

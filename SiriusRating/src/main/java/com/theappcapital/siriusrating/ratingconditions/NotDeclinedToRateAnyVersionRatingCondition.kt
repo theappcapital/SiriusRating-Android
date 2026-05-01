@@ -4,8 +4,7 @@ import com.theappcapital.siriusrating.datastores.DataStore
 import java.lang.Math.max
 import java.lang.Math.pow
 import java.time.Duration
-import java.time.LocalDate
-import java.time.ZoneOffset
+import java.time.Instant
 
 class NotDeclinedToRateAnyVersionRatingCondition(
     private val daysAfterDecliningToPromptUserAgain: Int,
@@ -25,19 +24,16 @@ class NotDeclinedToRateAnyVersionRatingCondition(
         // If the the user didn't decline to rate the app (yet), return `true`.
         val mostRecentDeclinedToRateUserAction = declinedToRateUserActions.maxByOrNull { it.date } ?: return true
 
-        if ((declinedToRateUserActions.count() - 1) > this.maxRecurringPromptsAfterDeclining) {
+        if ((declinedToRateUserActions.count() - 1) >= this.maxRecurringPromptsAfterDeclining) {
             // We reached the maximum amount of times the user can decline, we do not want
             // to show the prompt anymore at this point, return `false`.
             return false
         }
 
-        // Check if the app was used long enough after the most recent decline action:
-        // 1. Get the total amount of days since the user last declined until now.
-        val fromDate = LocalDate.from(mostRecentDeclinedToRateUserAction.date.atZone(ZoneOffset.UTC)).atStartOfDay()
-        val nowDate = LocalDate.now(ZoneOffset.UTC).atStartOfDay()
-        val totalDaysAfterUserDeclinedLast = Duration.between(fromDate, nowDate).toDays().toInt()
+        // Elapsed full 24-hour periods since the most recent decline.
+        val totalDaysAfterUserDeclinedLast = Duration.between(mostRecentDeclinedToRateUserAction.date, Instant.now()).toDays()
 
-        // 2. Calculate the number of days it takes to show the prompt again after the user declined.
+        // Calculate the number of days it takes to show the prompt again after the user declined.
         val totalDaysAfterDecliningToPromptUserAgain = this.calculatedTotalDaysToPromptUserAgain(
             daysAfterDecliningToPromptUserAgain = this.daysAfterDecliningToPromptUserAgain,
             backOffFactor = this.backOffFactor,
@@ -46,7 +42,7 @@ class NotDeclinedToRateAnyVersionRatingCondition(
 
         // Check if the total days after the user declined is greater than or equal
         // to the total days we needed to wait to show the prompt again.
-        return totalDaysAfterUserDeclinedLast >= totalDaysAfterDecliningToPromptUserAgain
+        return totalDaysAfterUserDeclinedLast >= totalDaysAfterDecliningToPromptUserAgain.toLong()
     }
 
     fun calculatedTotalDaysToPromptUserAgain(

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sirius_rating.text_view_title.text">Oceń %1$s</string>
+    <string name="sirius_rating.text_view_duration.text">(czas trwania: mniej niż 10 sekund)</string>
+    <string name="sirius_rating.text_view_description.text">Jeżeli podoba Ci się korzystanie z %1$s, może zechciałbyś poświęcić chwilę czasu, aby ocenić aplikację? Dziękujemy za pomoc!</string>
+    <string name="sirius_rating.button_rate.text">Oceń %1$s</string>
+    <string name="sirius_rating.button_decline.text">Nie, dziękuję</string>
+    <string name="sirius_rating.button_opt_in_for_reminder.text">Przypomnij później</string>
+</resources>

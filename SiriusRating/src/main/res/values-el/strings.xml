@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sirius_rating.text_view_title.text">Βαθμολόγηση του %1$s</string>
+    <string name="sirius_rating.text_view_duration.text">(διάρκεια: λιγότερο από 10 δευτερόλεπτα)</string>
+    <string name="sirius_rating.text_view_description.text">Αν σου αρέσει το %1$s, θα μπορούσες να αφιερώσεις μια στιγμή για να το βαθμολογήσεις; Ευχαριστούμε για τη στήριξη!</string>
+    <string name="sirius_rating.button_rate.text">Βαθμολόγηση του %1$s</string>
+    <string name="sirius_rating.button_decline.text">Όχι, ευχαριστώ</string>
+    <string name="sirius_rating.button_opt_in_for_reminder.text">Υπενθύμιση αργότερα</string>
+</resources>

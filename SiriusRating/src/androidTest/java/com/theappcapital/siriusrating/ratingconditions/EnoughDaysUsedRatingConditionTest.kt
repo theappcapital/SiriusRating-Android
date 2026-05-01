@@ -7,8 +7,8 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.time.LocalDateTime
-import java.time.ZoneOffset
+import java.time.Duration
+import java.time.Instant
 
 @RunWith(AndroidJUnit4ClassRunner::class)
 class EnoughDaysUsedRatingConditionTest {
@@ -26,7 +26,7 @@ class EnoughDaysUsedRatingConditionTest {
         val enoughDaysUsedRatingCondition = EnoughDaysUsedRatingCondition(totalDaysRequired = 2)
 
         // Set the first use date to 3 days ago.
-        this.inMemorySiriusRatingDataStore.firstUseDate = LocalDateTime.now().minusDays(3).toInstant(ZoneOffset.UTC)
+        this.inMemorySiriusRatingDataStore.firstUseDate = Instant.now().minus(Duration.ofDays(3))
 
         // The condition should be satisfied, because the total days required is 2 and the date the app was used
         // for the first time 3 days ago.
@@ -51,7 +51,7 @@ class EnoughDaysUsedRatingConditionTest {
         val enoughDaysUsedRatingCondition = EnoughDaysUsedRatingCondition(totalDaysRequired = 2)
 
         // Set the first use date to 1 days ago.
-        this.inMemorySiriusRatingDataStore.firstUseDate = LocalDateTime.now().minusDays(1).toInstant(ZoneOffset.UTC)
+        this.inMemorySiriusRatingDataStore.firstUseDate = Instant.now().minus(Duration.ofDays(1))
 
         // The condition should not be satisfied, because the total days used required to satisfy is 2 and the date the app was used
         // for the first time was 1 days ago.
